@@ -5,106 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="PizzaArte – Pizzas artesanais com ingredientes frescos e sabor inigualável. Conheça nosso cardápio e faça seu pedido online." />
   <title>PizzaArte – Pizzaria Artesanal</title>
-  <!-- CSS externo via tag link -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- Tailwind CSS v3 via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pizza: {
+              primary:   '#E8400A',
+              secondary: '#FF6B35',
+              dark:      '#1A0A00',
+              cream:     '#FFF8F0',
+              text:      '#2C1810',
+              gray:      '#6B5B4E',
+              border:    '#EAD8C8',
+            }
+          },
+          fontFamily: {
+            titulo: ['"Playfair Display"', 'Georgia', 'serif'],
+            corpo:  ['"Poppins"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Estilos mínimos para animações e gradientes -->
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .grad-primary { background: linear-gradient(135deg, #E8400A 0%, #FF6B35 50%, #FFA500 100%); }
+    .grad-text { background: linear-gradient(135deg, #E8400A 0%, #FF6B35 50%, #FFA500 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .grad-hot { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+    .grad-gold { background: linear-gradient(135deg, #B8860B, #FFD700); }
+    .anim-fade-up { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+    .anim-fade-up.visible { opacity: 1; transform: translateY(0); }
+    html { scroll-behavior: smooth; }
+  </style>
 </head>
-<body>
+<body class="bg-pizza-cream text-pizza-text leading-relaxed overflow-x-hidden">
 
   <!-- ==================== HEADER / NAVBAR ==================== -->
-  <!-- Elemento 1: header -->
-  <header id="header" class="header">
-    <!-- Elemento 2: nav -->
-    <nav id="navbar" class="navbar">
-      <!-- Elemento 3: div logo -->
-      <div id="logo" class="logo">
-        <span id="logo-icon" class="logo-icon">&#127829;</span>
-        <span id="logo-text" class="logo-text">PizzaArte</span>
+  <!-- Classes: fixed, top-0, left-0, right-0, z-50, transition-all -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <!-- Classes: flex, items-center, justify-between, gap-6, max-w-7xl, mx-auto, px-6, py-5 -->
+    <nav id="navbar" class="flex items-center justify-between gap-6 w-full max-w-7xl mx-auto px-6 py-5">
+      <!-- Classes: flex, items-center, gap-2.5 -->
+      <div id="logo" class="flex items-center gap-2.5 cursor-default">
+        <!-- Classes: text-3xl -->
+        <span id="logo-icon" class="text-3xl leading-none">&#127829;</span>
+        <!-- Classes: font-titulo, text-2xl, font-black, text-white, tracking-tight -->
+        <span id="logo-text" class="font-titulo text-2xl font-black text-white tracking-tight">PizzaArte</span>
       </div>
-      <!-- Elemento 4: ul nav-links -->
-      <ul id="nav-links" class="nav-links">
-        <li><a href="#hero" class="nav-link">Início</a></li>
-        <li><a href="#sobre" class="nav-link">Sobre</a></li>
-        <li><a href="#cardapio" class="nav-link">Cardápio</a></li>
-        <li><a href="#depoimentos" class="nav-link">Avaliações</a></li>
-        <li><a href="#contato" class="nav-link">Contato</a></li>
+      <!-- Classes: hidden, md:flex, items-center, gap-2, list-none -->
+      <ul id="nav-links" class="hidden md:flex items-center gap-2 list-none m-0 p-0">
+        <li><a href="#hero" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Início</a></li>
+        <li><a href="#sobre" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Sobre</a></li>
+        <li><a href="#cardapio" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Cardápio</a></li>
+        <li><a href="#depoimentos" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Avaliações</a></li>
+        <li><a href="#contato" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Contato</a></li>
       </ul>
-      <!-- Elemento 5: botão pedido -->
-      <button id="btn-pedido-nav" class="btn-primary">Fazer Pedido</button>
+      <!-- Classes: inline-flex, items-center, justify-center, text-white, font-semibold, px-7, py-3, rounded-full, border-none, cursor-pointer, shadow-lg, hover:-translate-y-0.5 -->
+      <button id="btn-pedido-nav" class="grad-primary inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-full border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300">Fazer Pedido</button>
     </nav>
   </header>
 
   <!-- ==================== HERO SECTION ==================== -->
-  <!-- Elemento 6: section hero -->
-  <section id="hero" class="hero">
-    <div id="hero-overlay" class="hero-overlay"></div>
-    <!-- Elemento 7: div hero-content -->
-    <div id="hero-content" class="hero-content">
-      <!-- Elemento 8: span badge -->
-      <span id="hero-badge" class="hero-badge">&#10024; Artesanal &amp; Premium</span>
-      <!-- Elemento 9: h1 título -->
-      <h1 id="hero-title" class="hero-title">
-        A Pizza que<br /><em>você merece</em>
+  <!-- Classes: relative, min-h-screen, flex, items-center, justify-center, bg-cover, bg-center, bg-no-repeat -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat pt-28 pb-20 px-6" style="background-image: url('img/pizza_hero.jpg');">
+    <!-- Classes: absolute, inset-0 -->
+    <div id="hero-overlay" class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26,10,0,0.85) 0%, rgba(232,64,10,0.4) 60%, rgba(26,10,0,0.6) 100%);"></div>
+    <!-- Classes: relative, z-10, text-center, max-w-3xl, mx-auto -->
+    <div id="hero-content" class="relative z-10 text-center max-w-3xl mx-auto">
+      <!-- Classes: inline-block, bg-white/15, border, border-white/30, text-white, text-sm, font-semibold, tracking-wide, px-5, py-2, rounded-full, mb-6, backdrop-blur-sm -->
+      <span id="hero-badge" class="inline-block bg-white/15 border border-white/30 text-white text-sm font-semibold tracking-wide px-5 py-2 rounded-full mb-6 backdrop-blur-sm">&#10024; Artesanal &amp; Premium</span>
+      <!-- Classes: font-titulo, text-4xl, md:text-6xl, lg:text-7xl, font-black, text-white, leading-none, mb-6 -->
+      <h1 id="hero-title" class="font-titulo text-4xl md:text-6xl lg:text-7xl font-black text-white leading-none mb-6" style="text-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+        A Pizza que<br /><em class="grad-text italic">você merece</em>
       </h1>
-      <!-- Elemento 10: p subtítulo -->
-      <p id="hero-subtitle" class="hero-subtitle">
+      <!-- Classes: text-base, md:text-lg, text-white/85, mb-10, max-w-xl, mx-auto -->
+      <p id="hero-subtitle" class="text-base md:text-lg text-white/85 mb-10 max-w-xl mx-auto">
         Ingredientes frescos, massa fermentada por 48h e um sabor que conta uma história a cada fatia.
       </p>
-      <!-- Elemento 11: div hero-btns -->
-      <div id="hero-btns" class="hero-btns">
-        <a href="#cardapio" id="btn-ver-cardapio" class="btn-primary btn-lg">Ver Cardápio</a>
-        <a href="#sobre" id="btn-nossa-historia" class="btn-outline btn-lg">Nossa História</a>
+      <!-- Classes: flex, items-center, justify-center, flex-wrap, gap-4, mb-16 -->
+      <div id="hero-btns" class="flex items-center justify-center flex-wrap gap-4 mb-16">
+        <!-- Classes: inline-flex, items-center, justify-center, text-white, font-semibold, text-base, px-9, py-4, rounded-full -->
+        <a href="#cardapio" id="btn-ver-cardapio" class="grad-primary inline-flex items-center justify-center text-white font-corpo text-base font-semibold px-9 py-4 rounded-full no-underline shadow-lg hover:-translate-y-0.5 transition-all duration-300">Ver Cardápio</a>
+        <!-- Classes: inline-flex, bg-transparent, text-white, border-2, border-white/70, backdrop-blur-sm -->
+        <a href="#sobre" id="btn-nossa-historia" class="inline-flex items-center justify-center bg-transparent text-white font-corpo text-base font-semibold px-9 py-4 rounded-full no-underline border-2 border-white/70 backdrop-blur-sm hover:bg-white/15 hover:border-white transition-all duration-300">Nossa História</a>
       </div>
-      <!-- Elemento 12: div hero-stats -->
-      <div id="hero-stats" class="hero-stats">
-        <div class="stat-item">
-          <strong>+10 anos</strong>
-          <span>de tradição</span>
+      <!-- Classes: flex, items-center, justify-center, flex-wrap, border, border-white/20, rounded-2xl, px-10, py-6, bg-white/10, backdrop-blur-md, max-w-xl, mx-auto -->
+      <div id="hero-stats" class="flex items-center justify-center flex-wrap border border-white/20 rounded-2xl px-10 py-6 bg-white/10 backdrop-blur-md max-w-xl mx-auto">
+        <!-- Classes: flex, flex-col, items-center, px-7 -->
+        <div class="flex flex-col items-center px-7 gap-0.5">
+          <!-- Classes: text-xl, font-bold, text-pizza-secondary -->
+          <strong class="text-xl font-bold text-pizza-secondary">+10 anos</strong>
+          <!-- Classes: text-xs, text-white/70, uppercase, tracking-wider -->
+          <span class="text-xs text-white/70 uppercase tracking-wider">de tradição</span>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <strong>+50 sabores</strong>
-          <span>no cardápio</span>
+        <!-- Classes: w-px, h-10, bg-white/20 -->
+        <div class="w-px h-10 bg-white/20"></div>
+        <div class="flex flex-col items-center px-7 gap-0.5">
+          <strong class="text-xl font-bold text-pizza-secondary">+50 sabores</strong>
+          <span class="text-xs text-white/70 uppercase tracking-wider">no cardápio</span>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <strong>4.9 &#11088;</strong>
-          <span>avaliação média</span>
+        <div class="w-px h-10 bg-white/20"></div>
+        <div class="flex flex-col items-center px-7 gap-0.5">
+          <strong class="text-xl font-bold text-pizza-secondary">4.9 &#11088;</strong>
+          <span class="text-xs text-white/70 uppercase tracking-wider">avaliação média</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ==================== SOBRE SECTION ==================== -->
-  <!-- Elemento 13: section sobre -->
-  <section id="sobre" class="sobre">
-    <div class="container">
-      <div id="sobre-content" class="sobre-content">
-        <div id="sobre-texto" class="sobre-texto">
-          <span class="section-badge">Quem Somos</span>
-          <h2 id="sobre-titulo" class="section-title">Uma paixão transformada em sabor</h2>
-          <p class="sobre-desc">
+  <!-- Classes: py-24, bg-white -->
+  <section id="sobre" class="py-24 bg-white">
+    <!-- Classes: w-full, max-w-7xl, mx-auto, px-6 -->
+    <div class="w-full max-w-7xl mx-auto px-6">
+      <!-- Classes: flex, flex-col, lg:flex-row, items-center, gap-16, flex-wrap -->
+      <div id="sobre-content" class="flex flex-col lg:flex-row items-center gap-16 flex-wrap">
+        <!-- Classes: flex-1, min-w-0 -->
+        <div id="sobre-texto" class="flex-1 min-w-0" style="flex-basis: 420px;">
+          <!-- Classes: inline-block, text-white, text-xs, font-semibold, tracking-widest, uppercase, px-5, py-1.5, rounded-full, mb-4 -->
+          <span class="grad-primary inline-block text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Quem Somos</span>
+          <!-- Classes: font-titulo, text-3xl, md:text-4xl, font-black, leading-tight, text-pizza-text, mb-4 -->
+          <h2 id="sobre-titulo" class="font-titulo text-3xl md:text-4xl font-black leading-tight text-pizza-text mb-4">Uma paixão transformada em sabor</h2>
+          <!-- Classes: text-base, text-pizza-gray, mb-4 -->
+          <p class="text-base text-pizza-gray mb-4">
             Fundada em 2014, a <strong>PizzaArte</strong> nasceu da paixão pela culinária italiana autêntica. Cada pizza é preparada à mão, com massa de fermentação lenta e ingredientes selecionados diretamente de produtores locais.
           </p>
-          <p class="sobre-desc">
+          <p class="text-base text-pizza-gray mb-4">
             Nosso forno a lenha atinge 450°C, garantindo uma pizza com borda crocante por fora e macia por dentro.
           </p>
-          <!-- Elemento 14: ul features -->
-          <ul id="sobre-features" class="sobre-features">
-            <li class="feature-item"><span class="feature-icon">&#127807;</span> Ingredientes 100% frescos e locais</li>
-            <li class="feature-item"><span class="feature-icon">&#128293;</span> Forno a lenha artesanal</li>
-            <li class="feature-item"><span class="feature-icon">&#9203;</span> Entrega em até 40 minutos</li>
-            <li class="feature-item"><span class="feature-icon">&#128154;</span> Opções vegetarianas e veganas</li>
+          <!-- Classes: list-none, mt-7, p-0, flex, flex-col, gap-3 -->
+          <ul id="sobre-features" class="list-none mt-7 p-0 flex flex-col gap-3">
+            <!-- Classes: flex, items-center, gap-3, text-sm, font-medium, text-pizza-text, px-4, py-3, border, border-pizza-border, rounded-xl, bg-pizza-cream, hover:border-pizza-primary, hover:bg-orange-50, hover:translate-x-1, transition-all, duration-300 -->
+            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
+              <span class="text-lg flex-shrink-0">&#127807;</span> Ingredientes 100% frescos e locais
+            </li>
+            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
+              <span class="text-lg flex-shrink-0">&#128293;</span> Forno a lenha artesanal
+            </li>
+            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
+              <span class="text-lg flex-shrink-0">&#9203;</span> Entrega em até 40 minutos
+            </li>
+            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
+              <span class="text-lg flex-shrink-0">&#128154;</span> Opções vegetarianas e veganas
+            </li>
           </ul>
         </div>
-        <div id="sobre-imagem" class="sobre-imagem">
-          <img src="img/pizza_hero.jpg" alt="Pizza artesanal saindo do forno" id="img-sobre" class="img-sobre" />
-          <div id="sobre-tag" class="sobre-tag">
-            <span class="sobre-tag-num">+10</span>
-            <span class="sobre-tag-txt">Anos de experiência</span>
+        <!-- Classes: flex-1, relative, min-w-0 -->
+        <div id="sobre-imagem" class="flex-1 relative min-w-0" style="flex-basis: 380px;">
+          <!-- Classes: w-full, h-96, lg:h-[480px], object-cover, rounded-2xl, border-4, border-pizza-border, block, shadow-xl -->
+          <img src="img/pizza_hero.jpg" alt="Pizza artesanal saindo do forno" id="img-sobre" class="w-full h-96 lg:h-[480px] object-cover rounded-2xl border-4 border-pizza-border block shadow-xl" />
+          <!-- Classes: absolute, -bottom-5, -left-5, rounded-xl, px-6, py-4, flex, flex-col, items-center, shadow-xl, border-4, border-white -->
+          <div id="sobre-tag" class="absolute -bottom-5 -left-5 grad-primary text-white rounded-xl px-6 py-4 flex flex-col items-center shadow-xl border-4 border-white">
+            <!-- Classes: font-titulo, text-4xl, font-black, leading-none -->
+            <span class="font-titulo text-4xl font-black leading-none">+10</span>
+            <!-- Classes: text-xs, font-semibold, uppercase, tracking-wider, opacity-90 -->
+            <span class="text-xs font-semibold uppercase tracking-wider opacity-90">Anos de experiência</span>
           </div>
         </div>
       </div>
@@ -112,78 +176,92 @@
   </section>
 
   <!-- ==================== CARDAPIO SECTION ==================== -->
-  <!-- Elemento 15: section cardapio -->
-  <section id="cardapio" class="cardapio">
-    <div class="container">
-      <!-- Elemento 16: div section-header -->
-      <div id="cardapio-header" class="section-header">
-        <span class="section-badge">Nosso Cardápio</span>
-        <h2 id="cardapio-titulo" class="section-title">Escolha a sua favorita</h2>
-        <p id="cardapio-desc" class="section-desc">
+  <!-- Classes: py-24, bg-pizza-cream -->
+  <section id="cardapio" class="py-24 bg-pizza-cream">
+    <div class="w-full max-w-7xl mx-auto px-6">
+      <!-- Classes: text-center, mb-14 -->
+      <div id="cardapio-header" class="text-center mb-14">
+        <span class="grad-primary inline-block text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Nosso Cardápio</span>
+        <h2 id="cardapio-titulo" class="font-titulo text-3xl md:text-4xl font-black leading-tight text-pizza-text mb-4">Escolha a sua favorita</h2>
+        <!-- Classes: text-lg, text-pizza-gray, mb-12, max-w-xl, mx-auto (já na section-desc) -->
+        <p id="cardapio-desc" class="text-lg text-pizza-gray max-w-xl mx-auto">
           Cada pizza conta uma história. Qual delas vai ser a sua?
         </p>
       </div>
 
-      <!-- Elemento 17: div cards-grid -->
-      <div id="cards-grid" class="cards-grid">
+      <!-- GRID: Classes: grid, grid-cols-1, sm:grid-cols-2, lg:grid-cols-3, gap-7 -->
+      <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
 
         <!-- Card 1 Frango -->
-        <article id="card-frango" class="pizza-card">
-          <div class="card-img-wrapper">
-            <img src="img/pizza_frango.jpg" alt="Pizza de Frango com Catupiry" class="card-img" />
-            <span class="card-badge">Mais Pedida</span>
+        <!-- Classes: bg-white, rounded-2xl, overflow-hidden, border, border-pizza-border, shadow-lg, hover:shadow-2xl, hover:-translate-y-2, transition-all, duration-300 -->
+        <article id="card-frango" class="anim-fade-up bg-white rounded-2xl overflow-hidden border border-pizza-border shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+          <!-- Classes: relative, overflow-hidden -->
+          <div class="relative overflow-hidden">
+            <!-- Classes: w-full, h-60, object-cover, block, hover:scale-105, transition-transform, duration-500 -->
+            <img src="img/pizza_frango.jpg" alt="Pizza de Frango com Catupiry" class="w-full h-60 object-cover block transition-transform duration-500 hover:scale-105" />
+            <!-- Classes: absolute, top-3.5, left-3.5, text-white, text-xs, font-bold, px-3, py-1, rounded-full, border, border-white/40 -->
+            <span class="absolute top-3.5 left-3.5 grad-primary text-white text-xs font-bold px-3 py-1 rounded-full border border-white/40">Mais Pedida</span>
           </div>
-          <div class="card-body">
-            <div class="card-header-row">
-              <h3 class="card-title">Frango &amp; Catupiry</h3>
-              <span class="card-price">R$ 49,90</span>
+          <!-- Classes: p-6, flex, flex-col, gap-2.5 -->
+          <div class="p-6 flex flex-col gap-2.5">
+            <!-- Classes: flex, items-start, justify-between, gap-3 -->
+            <div class="flex items-start justify-between gap-3">
+              <!-- Classes: font-titulo, text-xl, font-bold, text-pizza-text, leading-snug -->
+              <h3 class="font-titulo text-xl font-bold text-pizza-text leading-snug">Frango &amp; Catupiry</h3>
+              <!-- Classes: text-xl, font-bold, text-pizza-primary, whitespace-nowrap, flex-shrink-0 -->
+              <span class="text-xl font-bold text-pizza-primary whitespace-nowrap flex-shrink-0">R$ 49,90</span>
             </div>
-            <p class="card-desc">Frango desfiado temperado, catupiry cremoso, azeitonas e orégano. Uma combinação clássica e irresistível.</p>
-            <div class="card-tags">
-              <span class="tag">&#127829; Frango</span>
-              <span class="tag">&#129472; Catupiry</span>
+            <!-- Classes: text-sm, text-pizza-gray, leading-relaxed -->
+            <p class="text-sm text-pizza-gray leading-relaxed">Frango desfiado temperado, catupiry cremoso, azeitonas e orégano. Uma combinação clássica e irresistível.</p>
+            <!-- Classes: flex, gap-2, flex-wrap -->
+            <div class="flex gap-2 flex-wrap">
+              <!-- Classes: inline-block, bg-orange-50, text-pizza-primary, text-xs, font-semibold, px-3, py-1, rounded-full, border, border-orange-200 -->
+              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#127829; Frango</span>
+              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#129472; Catupiry</span>
             </div>
-            <button class="btn-primary btn-card" id="btn-frango">Pedir Agora</button>
+            <!-- Classes: w-full, mt-4, rounded-xl -->
+            <button class="grad-primary w-full mt-4 inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-xl border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300" id="btn-frango">Pedir Agora</button>
           </div>
         </article>
 
         <!-- Card 2 Pepperoni -->
-        <article id="card-pepperoni" class="pizza-card pizza-card--destaque">
-          <div class="card-img-wrapper">
-            <img src="img/pizza_pepperoni.jpg" alt="Pizza de Pepperoni" class="card-img" />
-            <span class="card-badge card-badge--hot">&#128293; Hot</span>
+        <!-- Classes: border-pizza-primary, border-2 (destaque) -->
+        <article id="card-pepperoni" class="anim-fade-up bg-white rounded-2xl overflow-hidden border-2 border-pizza-primary shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+          <div class="relative overflow-hidden">
+            <img src="img/pizza_pepperoni.jpg" alt="Pizza de Pepperoni" class="w-full h-60 object-cover block transition-transform duration-500 hover:scale-105" />
+            <span class="absolute top-3.5 left-3.5 grad-hot text-white text-xs font-bold px-3 py-1 rounded-full border border-white/40">&#128293; Hot</span>
           </div>
-          <div class="card-body">
-            <div class="card-header-row">
-              <h3 class="card-title">Pepperoni Clássico</h3>
-              <span class="card-price">R$ 54,90</span>
+          <div class="p-6 flex flex-col gap-2.5">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="font-titulo text-xl font-bold text-pizza-text leading-snug">Pepperoni Clássico</h3>
+              <span class="text-xl font-bold text-pizza-primary whitespace-nowrap flex-shrink-0">R$ 54,90</span>
             </div>
-            <p class="card-desc">Generosas fatias de pepperoni sobre molho de tomate artesanal e queijo mozarela derretido.</p>
-            <div class="card-tags">
-              <span class="tag">&#127798; Picante</span>
-              <span class="tag">&#129472; Mozarela</span>
+            <p class="text-sm text-pizza-gray leading-relaxed">Generosas fatias de pepperoni sobre molho de tomate artesanal e queijo mozarela derretido.</p>
+            <div class="flex gap-2 flex-wrap">
+              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#127798; Picante</span>
+              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#129472; Mozarela</span>
             </div>
-            <button class="btn-primary btn-card" id="btn-pepperoni">Pedir Agora</button>
+            <button class="grad-primary w-full mt-4 inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-xl border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300" id="btn-pepperoni">Pedir Agora</button>
           </div>
         </article>
 
         <!-- Card 3 Quatro Queijos -->
-        <article id="card-queijos" class="pizza-card">
-          <div class="card-img-wrapper">
-            <img src="img/pizza_quatro_queijos.jpg" alt="Pizza Quatro Queijos" class="card-img" />
-            <span class="card-badge card-badge--gold">&#11088; Premium</span>
+        <article id="card-queijos" class="anim-fade-up bg-white rounded-2xl overflow-hidden border border-pizza-border shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+          <div class="relative overflow-hidden">
+            <img src="img/pizza_quatro_queijos.jpg" alt="Pizza Quatro Queijos" class="w-full h-60 object-cover block transition-transform duration-500 hover:scale-105" />
+            <span class="absolute top-3.5 left-3.5 grad-gold text-amber-950 text-xs font-bold px-3 py-1 rounded-full border border-white/40">&#11088; Premium</span>
           </div>
-          <div class="card-body">
-            <div class="card-header-row">
-              <h3 class="card-title">Quatro Queijos</h3>
-              <span class="card-price">R$ 59,90</span>
+          <div class="p-6 flex flex-col gap-2.5">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="font-titulo text-xl font-bold text-pizza-text leading-snug">Quatro Queijos</h3>
+              <span class="text-xl font-bold text-pizza-primary whitespace-nowrap flex-shrink-0">R$ 59,90</span>
             </div>
-            <p class="card-desc">Mozarela, gorgonzola, parmesão e provolone sobre massa folhada. Para os verdadeiros amantes de queijo.</p>
-            <div class="card-tags">
-              <span class="tag">&#129472; 4 Queijos</span>
-              <span class="tag">&#127829; Especial</span>
+            <p class="text-sm text-pizza-gray leading-relaxed">Mozarela, gorgonzola, parmesão e provolone sobre massa folhada. Para os verdadeiros amantes de queijo.</p>
+            <div class="flex gap-2 flex-wrap">
+              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#129472; 4 Queijos</span>
+              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#127829; Especial</span>
             </div>
-            <button class="btn-primary btn-card" id="btn-queijos">Pedir Agora</button>
+            <button class="grad-primary w-full mt-4 inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-xl border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300" id="btn-queijos">Pedir Agora</button>
           </div>
         </article>
 
@@ -192,66 +270,85 @@
   </section>
 
   <!-- ==================== DEPOIMENTOS ==================== -->
-  <!-- Elemento 18: section depoimentos -->
-  <section id="depoimentos" class="depoimentos">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-badge section-badge--light">Avaliações</span>
-        <h2 class="section-title section-title--light">O que dizem nossos clientes</h2>
+  <!-- Classes: py-24, bg-pizza-dark -->
+  <section id="depoimentos" class="py-24 bg-pizza-dark">
+    <div class="w-full max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <!-- Classes: bg-white/20, border, border-white/40 (badge light) -->
+        <span class="inline-block bg-white/20 border border-white/40 text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Avaliações</span>
+        <!-- Classes: text-white -->
+        <h2 class="font-titulo text-3xl md:text-4xl font-black leading-tight text-white mb-4">O que dizem nossos clientes</h2>
       </div>
-      <!-- Elemento 19: div reviews-grid -->
-      <div id="reviews-grid" class="reviews-grid">
-        <div class="review-card" id="review-1">
-          <p class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
-          <p class="review-text">"A melhor pizza que já comi! A massa é simplesmente perfeita, crocante e leve ao mesmo tempo. Recomendo demais!"</p>
-          <p class="review-author">— <strong>Ana Souza</strong>, cliente desde 2020</p>
+      <!-- GRID: Classes: grid, grid-cols-1, md:grid-cols-3, gap-6 -->
+      <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Classes: bg-white/5, border, border-white/10, rounded-2xl, p-8, hover:bg-white/10, hover:border-pizza-primary/40, hover:-translate-y-1, hover:shadow-xl -->
+        <div class="anim-fade-up bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-pizza-primary/40 hover:-translate-y-1 hover:shadow-xl transition-all duration-300" id="review-1">
+          <!-- Classes: text-lg, mb-4 -->
+          <p class="text-lg mb-4">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
+          <!-- Classes: text-sm, text-white/80, italic, leading-relaxed, mb-5 -->
+          <p class="text-sm text-white/80 italic leading-relaxed mb-5">"A melhor pizza que já comi! A massa é simplesmente perfeita, crocante e leve ao mesmo tempo. Recomendo demais!"</p>
+          <!-- Classes: text-sm, text-white/50 -->
+          <p class="text-sm text-white/50">— <strong class="text-pizza-secondary">Ana Souza</strong>, cliente desde 2020</p>
         </div>
-        <div class="review-card" id="review-2">
-          <p class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
-          <p class="review-text">"Pepperoni incrível! Chegou quentinha e o sabor é diferente de qualquer outra pizzaria. Virei fã!"</p>
-          <p class="review-author">— <strong>Carlos Lima</strong>, cliente desde 2021</p>
+        <div class="anim-fade-up bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-pizza-primary/40 hover:-translate-y-1 hover:shadow-xl transition-all duration-300" id="review-2">
+          <p class="text-lg mb-4">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
+          <p class="text-sm text-white/80 italic leading-relaxed mb-5">"Pepperoni incrível! Chegou quentinha e o sabor é diferente de qualquer outra pizzaria. Virei fã!"</p>
+          <p class="text-sm text-white/50">— <strong class="text-pizza-secondary">Carlos Lima</strong>, cliente desde 2021</p>
         </div>
-        <div class="review-card" id="review-3">
-          <p class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
-          <p class="review-text">"Quatro queijos perfeita! O gorgonzola não é enjoativo e o equilíbrio dos queijos é impecável. Já pedi 3x essa semana!"</p>
-          <p class="review-author">— <strong>Fernanda Costa</strong>, cliente desde 2019</p>
+        <div class="anim-fade-up bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-pizza-primary/40 hover:-translate-y-1 hover:shadow-xl transition-all duration-300" id="review-3">
+          <p class="text-lg mb-4">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
+          <p class="text-sm text-white/80 italic leading-relaxed mb-5">"Quatro queijos perfeita! O gorgonzola não é enjoativo e o equilíbrio dos queijos é impecável. Já pedi 3x essa semana!"</p>
+          <p class="text-sm text-white/50">— <strong class="text-pizza-secondary">Fernanda Costa</strong>, cliente desde 2019</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ==================== CONTATO / CTA ==================== -->
-  <!-- Elemento 20: section contato -->
-  <section id="contato" class="contato">
-    <div class="container">
-      <div id="contato-content" class="contato-content">
-        <div id="contato-info" class="contato-info">
-          <span class="section-badge">Fale Conosco</span>
-          <h2 class="section-title">Pronto para pedir?</h2>
-          <p class="contato-desc">Atendemos todos os dias das 17h às 23h. Delivery e retirada no balcão disponíveis.</p>
-          <div id="contato-detalhes" class="contato-detalhes">
-            <p class="contato-item">&#128205; Rua das Pizzas, 42 – Centro</p>
-            <p class="contato-item">&#128222; (11) 99999-0000</p>
-            <p class="contato-item">&#128231; contato@pizzaarte.com.br</p>
-            <p class="contato-item">&#128336; Seg–Dom: 17h às 23h</p>
+  <!-- Classes: py-24, bg-white -->
+  <section id="contato" class="py-24 bg-white">
+    <div class="w-full max-w-7xl mx-auto px-6">
+      <!-- Classes: flex, flex-col, lg:flex-row, gap-16, flex-wrap, items-start -->
+      <div id="contato-content" class="flex flex-col lg:flex-row gap-16 flex-wrap items-start">
+        <!-- Classes: flex-1, min-w-0 -->
+        <div id="contato-info" class="flex-1 min-w-0" style="flex-basis: 320px;">
+          <span class="grad-primary inline-block text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Fale Conosco</span>
+          <h2 class="font-titulo text-3xl md:text-4xl font-black leading-tight text-pizza-text mb-4">Pronto para pedir?</h2>
+          <!-- Classes: text-base, text-pizza-gray, mb-8 -->
+          <p class="text-base text-pizza-gray mb-8">Atendemos todos os dias das 17h às 23h. Delivery e retirada no balcão disponíveis.</p>
+          <!-- Classes: flex, flex-col, gap-3.5 -->
+          <div id="contato-detalhes" class="flex flex-col gap-3.5">
+            <!-- Classes: text-base, text-pizza-text, font-medium, px-4, py-3.5, bg-pizza-cream, border, border-pizza-border, rounded-xl, hover:border-pizza-primary, hover:bg-orange-50, transition-all, duration-300 -->
+            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128205; Rua das Pizzas, 42 – Centro</p>
+            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128222; (11) 99999-0000</p>
+            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128231; contato@pizzaarte.com.br</p>
+            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128336; Seg–Dom: 17h às 23h</p>
           </div>
         </div>
-        <div id="contato-form-wrapper" class="contato-form-wrapper">
-          <form id="contato-form" class="contato-form" onsubmit="return false;">
-            <h3 class="form-title">Envie uma mensagem</h3>
-            <div class="form-group">
-              <label for="input-nome" class="form-label">Seu nome</label>
-              <input type="text" id="input-nome" class="form-input" placeholder="Ex: João Silva" />
+        <!-- Classes: flex-1, min-w-0 -->
+        <div id="contato-form-wrapper" class="flex-1 min-w-0" style="flex-basis: 360px;">
+          <!-- Classes: bg-pizza-cream, border, border-pizza-border, rounded-3xl, p-10, flex, flex-col, gap-5 -->
+          <form id="contato-form" class="bg-pizza-cream border border-pizza-border rounded-3xl p-10 flex flex-col gap-5" onsubmit="return false;">
+            <!-- Classes: font-titulo, text-2xl, font-bold, text-pizza-text, mb-2 -->
+            <h3 class="font-titulo text-2xl font-bold text-pizza-text mb-2">Envie uma mensagem</h3>
+            <!-- Classes: flex, flex-col, gap-1.5 -->
+            <div class="flex flex-col gap-1.5">
+              <!-- Classes: text-sm, font-semibold, text-pizza-text, mb-0.5 -->
+              <label for="input-nome" class="text-sm font-semibold text-pizza-text mb-0.5">Seu nome</label>
+              <!-- Classes: w-full, px-4, py-3.5, border-2, border-pizza-border, rounded-xl, font-corpo, text-sm, text-pizza-text, bg-white, outline-none, focus:border-pizza-primary, focus:ring-2, focus:ring-pizza-primary/20, transition-all, duration-300 -->
+              <input type="text" id="input-nome" class="w-full px-4 py-3.5 border-2 border-pizza-border rounded-xl font-corpo text-sm text-pizza-text bg-white outline-none focus:border-pizza-primary focus:ring-2 focus:ring-pizza-primary/20 transition-all duration-300" placeholder="Ex: João Silva" />
             </div>
-            <div class="form-group">
-              <label for="input-email" class="form-label">E-mail</label>
-              <input type="email" id="input-email" class="form-input" placeholder="seu@email.com" />
+            <div class="flex flex-col gap-1.5">
+              <label for="input-email" class="text-sm font-semibold text-pizza-text mb-0.5">E-mail</label>
+              <input type="email" id="input-email" class="w-full px-4 py-3.5 border-2 border-pizza-border rounded-xl font-corpo text-sm text-pizza-text bg-white outline-none focus:border-pizza-primary focus:ring-2 focus:ring-pizza-primary/20 transition-all duration-300" placeholder="seu@email.com" />
             </div>
-            <div class="form-group">
-              <label for="input-msg" class="form-label">Mensagem</label>
-              <textarea id="input-msg" class="form-input form-textarea" placeholder="Digite sua mensagem..."></textarea>
+            <div class="flex flex-col gap-1.5">
+              <label for="input-msg" class="text-sm font-semibold text-pizza-text mb-0.5">Mensagem</label>
+              <!-- Classes: h-32, resize-y -->
+              <textarea id="input-msg" class="w-full px-4 py-3.5 border-2 border-pizza-border rounded-xl font-corpo text-sm text-pizza-text bg-white outline-none focus:border-pizza-primary focus:ring-2 focus:ring-pizza-primary/20 transition-all duration-300 h-32 resize-y" placeholder="Digite sua mensagem..."></textarea>
             </div>
-            <button type="submit" id="btn-enviar" class="btn-primary btn-full">Enviar Mensagem &#127829;</button>
+            <!-- Classes: w-full -->
+            <button type="submit" id="btn-enviar" class="grad-primary w-full inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3.5 rounded-full border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300">Enviar Mensagem &#127829;</button>
           </form>
         </div>
       </div>
@@ -259,30 +356,42 @@
   </section>
 
   <!-- ==================== FOOTER ==================== -->
-  <footer id="footer" class="footer">
-    <div class="container">
-      <div id="footer-content" class="footer-content">
-        <div id="footer-brand" class="footer-brand">
-          <span class="logo-icon">&#127829;</span>
-          <span class="logo-text">PizzaArte</span>
-          <p class="footer-tagline">Feita com amor, entregue com cuidado.</p>
+  <!-- Classes: bg-pizza-dark, pt-12, pb-6 -->
+  <footer id="footer" class="bg-pizza-dark pt-12 pb-6">
+    <div class="w-full max-w-7xl mx-auto px-6">
+      <!-- Classes: flex, flex-col, md:flex-row, items-center, justify-between, flex-wrap, gap-8, pb-8, border-b, border-white/10, mb-6 -->
+      <div id="footer-content" class="flex flex-col md:flex-row items-center justify-between flex-wrap gap-8 pb-8 border-b border-white/10 mb-6">
+        <!-- Classes: flex, flex-col, gap-1.5 -->
+        <div id="footer-brand" class="flex flex-col gap-1.5">
+          <div class="flex items-center gap-2.5">
+            <span class="text-3xl leading-none">&#127829;</span>
+            <span class="font-titulo text-2xl font-black text-white tracking-tight">PizzaArte</span>
+          </div>
+          <!-- Classes: text-sm, text-white/40, mt-1 -->
+          <p class="text-sm text-white/40 mt-1">Feita com amor, entregue com cuidado.</p>
         </div>
-        <div id="footer-links" class="footer-links">
-          <a href="#hero" class="footer-link">Início</a>
-          <a href="#cardapio" class="footer-link">Cardápio</a>
-          <a href="#sobre" class="footer-link">Sobre</a>
-          <a href="#contato" class="footer-link">Contato</a>
+        <!-- Classes: flex, gap-2, flex-wrap -->
+        <div id="footer-links" class="flex gap-2 flex-wrap">
+          <!-- Classes: text-white/60, text-sm, px-3.5, py-1.5, rounded-lg, hover:text-white, hover:bg-white/10, transition-all, duration-300, no-underline -->
+          <a href="#hero" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Início</a>
+          <a href="#cardapio" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Cardápio</a>
+          <a href="#sobre" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Sobre</a>
+          <a href="#contato" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Contato</a>
         </div>
-        <div id="footer-social" class="footer-social">
-          <a href="#" class="social-btn" id="btn-instagram" aria-label="Instagram">&#128248; Instagram</a>
-          <a href="#" class="social-btn" id="btn-whatsapp" aria-label="WhatsApp">&#128172; WhatsApp</a>
+        <!-- Classes: flex, gap-3 -->
+        <div id="footer-social" class="flex gap-3">
+          <!-- Classes: inline-flex, items-center, gap-1.5, text-white/70, text-sm, font-medium, px-4, py-2, border, border-white/15, rounded-full, hover:text-white, hover:border-pizza-primary, hover:bg-pizza-primary/15 -->
+          <a href="#" class="inline-flex items-center gap-1.5 text-white/70 text-sm font-medium px-4 py-2 border border-white/15 rounded-full hover:text-white hover:border-pizza-primary hover:bg-pizza-primary/15 transition-all duration-300 no-underline" id="btn-instagram" aria-label="Instagram">&#128248; Instagram</a>
+          <a href="#" class="inline-flex items-center gap-1.5 text-white/70 text-sm font-medium px-4 py-2 border border-white/15 rounded-full hover:text-white hover:border-pizza-primary hover:bg-pizza-primary/15 transition-all duration-300 no-underline" id="btn-whatsapp" aria-label="WhatsApp">&#128172; WhatsApp</a>
         </div>
       </div>
-      <p id="footer-copy" class="footer-copy">&#169; 2026 PizzaArte. Todos os direitos reservados.</p>
+      <!-- Classes: text-center, text-xs, text-white/30 -->
+      <p id="footer-copy" class="text-center text-xs text-white/30">&#169; 2026 PizzaArte. Todos os direitos reservados.</p>
     </div>
   </footer>
 
   <script>
+    // Smooth scroll para links de âncora
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -291,22 +400,24 @@
       });
     });
 
+    // Animação de entrada com IntersectionObserver
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.pizza-card, .review-card').forEach(function(el) {
+    document.querySelectorAll('.anim-fade-up').forEach(function(el) {
       observer.observe(el);
     });
 
+    // Header escurece ao scrollar
     window.addEventListener('scroll', function() {
       var header = document.getElementById('header');
       if (window.scrollY > 50) {
-        header.classList.add('header--scrolled');
+        header.classList.add('bg-pizza-dark/95', 'backdrop-blur-lg', 'shadow-2xl');
       } else {
-        header.classList.remove('header--scrolled');
+        header.classList.remove('bg-pizza-dark/95', 'backdrop-blur-lg', 'shadow-2xl');
       }
     });
   </script>
