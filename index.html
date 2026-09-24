@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PizzaArte – Pizzas artesanais com ingredientes frescos e sabor inigualável. Conheça nosso cardápio e faça seu pedido online." />
+  <title>PizzaArte – Pizzaria Artesanal</title>
+  <!-- CSS externo via tag link -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ==================== HEADER / NAVBAR ==================== -->
+  <!-- Elemento 1: header -->
+  <header id="header" class="header">
+    <!-- Elemento 2: nav -->
+    <nav id="navbar" class="navbar">
+      <!-- Elemento 3: div logo -->
+      <div id="logo" class="logo">
+        <span id="logo-icon" class="logo-icon">&#127829;</span>
+        <span id="logo-text" class="logo-text">PizzaArte</span>
+      </div>
+      <!-- Elemento 4: ul nav-links -->
+      <ul id="nav-links" class="nav-links">
+        <li><a href="#hero" class="nav-link">Início</a></li>
+        <li><a href="#sobre" class="nav-link">Sobre</a></li>
+        <li><a href="#cardapio" class="nav-link">Cardápio</a></li>
+        <li><a href="#depoimentos" class="nav-link">Avaliações</a></li>
+        <li><a href="#contato" class="nav-link">Contato</a></li>
+      </ul>
+      <!-- Elemento 5: botão pedido -->
+      <button id="btn-pedido-nav" class="btn-primary">Fazer Pedido</button>
+    </nav>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <!-- Elemento 6: section hero -->
+  <section id="hero" class="hero">
+    <div id="hero-overlay" class="hero-overlay"></div>
+    <!-- Elemento 7: div hero-content -->
+    <div id="hero-content" class="hero-content">
+      <!-- Elemento 8: span badge -->
+      <span id="hero-badge" class="hero-badge">&#10024; Artesanal &amp; Premium</span>
+      <!-- Elemento 9: h1 título -->
+      <h1 id="hero-title" class="hero-title">
+        A Pizza que<br /><em>você merece</em>
+      </h1>
+      <!-- Elemento 10: p subtítulo -->
+      <p id="hero-subtitle" class="hero-subtitle">
+        Ingredientes frescos, massa fermentada por 48h e um sabor que conta uma história a cada fatia.
+      </p>
+      <!-- Elemento 11: div hero-btns -->
+      <div id="hero-btns" class="hero-btns">
+        <a href="#cardapio" id="btn-ver-cardapio" class="btn-primary btn-lg">Ver Cardápio</a>
+        <a href="#sobre" id="btn-nossa-historia" class="btn-outline btn-lg">Nossa História</a>
+      </div>
+      <!-- Elemento 12: div hero-stats -->
+      <div id="hero-stats" class="hero-stats">
+        <div class="stat-item">
+          <strong>+10 anos</strong>
+          <span>de tradição</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <strong>+50 sabores</strong>
+          <span>no cardápio</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <strong>4.9 &#11088;</strong>
+          <span>avaliação média</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SOBRE SECTION ==================== -->
+  <!-- Elemento 13: section sobre -->
+  <section id="sobre" class="sobre">
+    <div class="container">
+      <div id="sobre-content" class="sobre-content">
+        <div id="sobre-texto" class="sobre-texto">
+          <span class="section-badge">Quem Somos</span>
+          <h2 id="sobre-titulo" class="section-title">Uma paixão transformada em sabor</h2>
+          <p class="sobre-desc">
+            Fundada em 2014, a <strong>PizzaArte</strong> nasceu da paixão pela culinária italiana autêntica. Cada pizza é preparada à mão, com massa de fermentação lenta e ingredientes selecionados diretamente de produtores locais.
+          </p>
+          <p class="sobre-desc">
+            Nosso forno a lenha atinge 450°C, garantindo uma pizza com borda crocante por fora e macia por dentro.
+          </p>
+          <!-- Elemento 14: ul features -->
+          <ul id="sobre-features" class="sobre-features">
+            <li class="feature-item"><span class="feature-icon">&#127807;</span> Ingredientes 100% frescos e locais</li>
+            <li class="feature-item"><span class="feature-icon">&#128293;</span> Forno a lenha artesanal</li>
+            <li class="feature-item"><span class="feature-icon">&#9203;</span> Entrega em até 40 minutos</li>
+            <li class="feature-item"><span class="feature-icon">&#128154;</span> Opções vegetarianas e veganas</li>
+          </ul>
+        </div>
+        <div id="sobre-imagem" class="sobre-imagem">
+          <img src="img/pizza_hero.jpg" alt="Pizza artesanal saindo do forno" id="img-sobre" class="img-sobre" />
+          <div id="sobre-tag" class="sobre-tag">
+            <span class="sobre-tag-num">+10</span>
+            <span class="sobre-tag-txt">Anos de experiência</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CARDAPIO SECTION ==================== -->
+  <!-- Elemento 15: section cardapio -->
+  <section id="cardapio" class="cardapio">
+    <div class="container">
+      <!-- Elemento 16: div section-header -->
+      <div id="cardapio-header" class="section-header">
+        <span class="section-badge">Nosso Cardápio</span>
+        <h2 id="cardapio-titulo" class="section-title">Escolha a sua favorita</h2>
+        <p id="cardapio-desc" class="section-desc">
+          Cada pizza conta uma história. Qual delas vai ser a sua?
+        </p>
+      </div>
+
+      <!-- Elemento 17: div cards-grid -->
+      <div id="cards-grid" class="cards-grid">
+
+        <!-- Card 1 Frango -->
+        <article id="card-frango" class="pizza-card">
+          <div class="card-img-wrapper">
+            <img src="img/pizza_frango.jpg" alt="Pizza de Frango com Catupiry" class="card-img" />
+            <span class="card-badge">Mais Pedida</span>
+          </div>
+          <div class="card-body">
+            <div class="card-header-row">
+              <h3 class="card-title">Frango &amp; Catupiry</h3>
+              <span class="card-price">R$ 49,90</span>
+            </div>
+            <p class="card-desc">Frango desfiado temperado, catupiry cremoso, azeitonas e orégano. Uma combinação clássica e irresistível.</p>
+            <div class="card-tags">
+              <span class="tag">&#127829; Frango</span>
+              <span class="tag">&#129472; Catupiry</span>
+            </div>
+            <button class="btn-primary btn-card" id="btn-frango">Pedir Agora</button>
+          </div>
+        </article>
+
+        <!-- Card 2 Pepperoni -->
+        <article id="card-pepperoni" class="pizza-card pizza-card--destaque">
+          <div class="card-img-wrapper">
+            <img src="img/pizza_pepperoni.jpg" alt="Pizza de Pepperoni" class="card-img" />
+            <span class="card-badge card-badge--hot">&#128293; Hot</span>
+          </div>
+          <div class="card-body">
+            <div class="card-header-row">
+              <h3 class="card-title">Pepperoni Clássico</h3>
+              <span class="card-price">R$ 54,90</span>
+            </div>
+            <p class="card-desc">Generosas fatias de pepperoni sobre molho de tomate artesanal e queijo mozarela derretido.</p>
+            <div class="card-tags">
+              <span class="tag">&#127798; Picante</span>
+              <span class="tag">&#129472; Mozarela</span>
+            </div>
+            <button class="btn-primary btn-card" id="btn-pepperoni">Pedir Agora</button>
+          </div>
+        </article>
+
+        <!-- Card 3 Quatro Queijos -->
+        <article id="card-queijos" class="pizza-card">
+          <div class="card-img-wrapper">
+            <img src="img/pizza_quatro_queijos.jpg" alt="Pizza Quatro Queijos" class="card-img" />
+            <span class="card-badge card-badge--gold">&#11088; Premium</span>
+          </div>
+          <div class="card-body">
+            <div class="card-header-row">
+              <h3 class="card-title">Quatro Queijos</h3>
+              <span class="card-price">R$ 59,90</span>
+            </div>
+            <p class="card-desc">Mozarela, gorgonzola, parmesão e provolone sobre massa folhada. Para os verdadeiros amantes de queijo.</p>
+            <div class="card-tags">
+              <span class="tag">&#129472; 4 Queijos</span>
+              <span class="tag">&#127829; Especial</span>
+            </div>
+            <button class="btn-primary btn-card" id="btn-queijos">Pedir Agora</button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DEPOIMENTOS ==================== -->
+  <!-- Elemento 18: section depoimentos -->
+  <section id="depoimentos" class="depoimentos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge section-badge--light">Avaliações</span>
+        <h2 class="section-title section-title--light">O que dizem nossos clientes</h2>
+      </div>
+      <!-- Elemento 19: div reviews-grid -->
+      <div id="reviews-grid" class="reviews-grid">
+        <div class="review-card" id="review-1">
+          <p class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
+          <p class="review-text">"A melhor pizza que já comi! A massa é simplesmente perfeita, crocante e leve ao mesmo tempo. Recomendo demais!"</p>
+          <p class="review-author">— <strong>Ana Souza</strong>, cliente desde 2020</p>
+        </div>
+        <div class="review-card" id="review-2">
+          <p class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
+          <p class="review-text">"Pepperoni incrível! Chegou quentinha e o sabor é diferente de qualquer outra pizzaria. Virei fã!"</p>
+          <p class="review-author">— <strong>Carlos Lima</strong>, cliente desde 2021</p>
+        </div>
+        <div class="review-card" id="review-3">
+          <p class="review-stars">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
+          <p class="review-text">"Quatro queijos perfeita! O gorgonzola não é enjoativo e o equilíbrio dos queijos é impecável. Já pedi 3x essa semana!"</p>
+          <p class="review-author">— <strong>Fernanda Costa</strong>, cliente desde 2019</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTATO / CTA ==================== -->
+  <!-- Elemento 20: section contato -->
+  <section id="contato" class="contato">
+    <div class="container">
+      <div id="contato-content" class="contato-content">
+        <div id="contato-info" class="contato-info">
+          <span class="section-badge">Fale Conosco</span>
+          <h2 class="section-title">Pronto para pedir?</h2>
+          <p class="contato-desc">Atendemos todos os dias das 17h às 23h. Delivery e retirada no balcão disponíveis.</p>
+          <div id="contato-detalhes" class="contato-detalhes">
+            <p class="contato-item">&#128205; Rua das Pizzas, 42 – Centro</p>
+            <p class="contato-item">&#128222; (11) 99999-0000</p>
+            <p class="contato-item">&#128231; contato@pizzaarte.com.br</p>
+            <p class="contato-item">&#128336; Seg–Dom: 17h às 23h</p>
+          </div>
+        </div>
+        <div id="contato-form-wrapper" class="contato-form-wrapper">
+          <form id="contato-form" class="contato-form" onsubmit="return false;">
+            <h3 class="form-title">Envie uma mensagem</h3>
+            <div class="form-group">
+              <label for="input-nome" class="form-label">Seu nome</label>
+              <input type="text" id="input-nome" class="form-input" placeholder="Ex: João Silva" />
+            </div>
+            <div class="form-group">
+              <label for="input-email" class="form-label">E-mail</label>
+              <input type="email" id="input-email" class="form-input" placeholder="seu@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="input-msg" class="form-label">Mensagem</label>
+              <textarea id="input-msg" class="form-input form-textarea" placeholder="Digite sua mensagem..."></textarea>
+            </div>
+            <button type="submit" id="btn-enviar" class="btn-primary btn-full">Enviar Mensagem &#127829;</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div id="footer-content" class="footer-content">
+        <div id="footer-brand" class="footer-brand">
+          <span class="logo-icon">&#127829;</span>
+          <span class="logo-text">PizzaArte</span>
+          <p class="footer-tagline">Feita com amor, entregue com cuidado.</p>
+        </div>
+        <div id="footer-links" class="footer-links">
+          <a href="#hero" class="footer-link">Início</a>
+          <a href="#cardapio" class="footer-link">Cardápio</a>
+          <a href="#sobre" class="footer-link">Sobre</a>
+          <a href="#contato" class="footer-link">Contato</a>
+        </div>
+        <div id="footer-social" class="footer-social">
+          <a href="#" class="social-btn" id="btn-instagram" aria-label="Instagram">&#128248; Instagram</a>
+          <a href="#" class="social-btn" id="btn-whatsapp" aria-label="WhatsApp">&#128172; WhatsApp</a>
+        </div>
+      </div>
+      <p id="footer-copy" class="footer-copy">&#169; 2026 PizzaArte. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.pizza-card, .review-card').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    window.addEventListener('scroll', function() {
+      var header = document.getElementById('header');
+      if (window.scrollY > 50) {
+        header.classList.add('header--scrolled');
+      } else {
+        header.classList.remove('header--scrolled');
+      }
+    });
+  </script>
+
+</body>
+</html>
