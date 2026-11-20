@@ -1,0 +1,130 @@
+/* ==========================================================================
+   PizzaArte – Estilos Customizados, Superfícies & Tokens de Motion
+   ========================================================================== */
+:root {
+  --washi: #F1E9DE;
+  --washi-warm: #ECE4D9;
+  --ink: #251C16;
+  --night: #241B15;
+  --night-deep: #1A130E;
+  --cream: #EDE9DF;
+  --vermilion: #C4472F;
+  --lantern: #E8A54B;
+}
+
+::selection {
+  background: #C4472F;
+  color: #F1E9DE;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--washi);
+  color: var(--ink);
+}
+
+/* Header / Nav Shell & Estados */
+.nav-shell {
+  transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.5s, backdrop-filter 0.5s, border-color 0.5s;
+  height: 88px;
+}
+
+.nav--scrolled .nav-shell {
+  background: rgba(241, 233, 222, 0.85);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  height: 68px;
+  border-bottom: 1px solid rgba(37, 28, 22, 0.1);
+}
+
+.nav--night .nav-shell {
+  background: rgba(36, 27, 21, 0.85) !important;
+  border-bottom: 1px solid rgba(237, 233, 223, 0.12) !important;
+}
+
+.nav--night .nav-ink {
+  color: #EDE9DF !important;
+}
+
+.nav--night .nav-border {
+  border-color: rgba(237, 233, 223, 0.35) !important;
+}
+
+/* Link com sublinhado animado (.u-link) */
+.u-link {
+  position: relative;
+}
+
+.u-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background: #C4472F;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.u-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Numeral Contornado dos Cards (.gal-num) */
+.gal-num {
+  font-family: 'Cormorant Garamond', serif;
+  -webkit-text-stroke: 1px #251C16;
+  color: transparent;
+  transition: color 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gal-card:hover .gal-num,
+.gal-card.is-active .gal-num {
+  color: #251C16;
+}
+
+/* Animação do Indicador de Scroll */
+@keyframes scrollDot {
+  0% { transform: translate(-50%, 0); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translate(-50%, 34px); opacity: 0; }
+}
+
+.animate-scroll-dot {
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+/* Animação de Entrada por Bloco */
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.anim-fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Vinhetas de Superfície */
+.paper-vignette {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 60%, rgba(37, 28, 22, 0.035) 100%);
+}
+
+.film-vignette {
+  box-shadow: inset 0 0 18vmin rgba(26, 19, 14, 0.78);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

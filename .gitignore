@@ -1,0 +1,17 @@
+# Design System de referência (não deve subir para o repositório)
+desingn_system/
+design_system/
+*.zip
+
+# Vercel & Ambiente Local
+.vercel
+.env
+.env.*
+node_modules/
+
+# Sistema Operacional & Editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

@@ -78,19 +78,25 @@ Foram utilizadas **mais de 50 classes utilitárias distintas** do Tailwind CSS, 
 ## 🗂️ Estrutura de Arquivos
 
 ```
-A07_Projeto_front_end - Copia/
+projeto_tailwind_CSS/
 │
-├── index.html          # Único arquivo com a estrutura HTML e todas as classes Tailwind aplicadas
-├── README.md           # Documentação do projeto refatorado
+├── index.html          # Estrutura HTML principal com classes utilitárias Tailwind CSS
+├── vercel.json         # Configuração de deploy estático e cache de assets na Vercel
+├── .gitignore          # Ignora arquivos locais e a pasta de referência do design system
+├── README.md           # Documentação do projeto
+│
+├── css/
+│   └── main.css        # Tokens de superfície, estados de navegação e keyframes de motion
+│
+├── js/
+│   └── main.js         # Motor de motion (GSAP, ScrollTrigger, Lenis) e interações de UI
 │
 └── img/
-    ├── pizza_hero.jpg          # Imagem de fundo do Hero e seção Sobre
-    ├── pizza_frango.jpg        # Card: Pizza Frango & Catupiry
-    ├── pizza_pepperoni.jpg     # Card: Pizza Pepperoni Clássico
-    └── pizza_quatro_queijos.jpg # Card: Pizza Quatro Queijos
+    ├── pizza_hero.jpg           # Imagem de fundo do Hero e seção Manifesto
+    ├── pizza_frango.jpg         # Card: Estação 01 - Frango & Catupiry
+    ├── pizza_pepperoni.jpg      # Card: Estação 02 - Pepperoni Clássico
+    └── pizza_quatro_queijos.jpg # Card: Estação 03 - Quatro Queijos
 ```
-
-*(Nota: O arquivo `style.css` antigo foi completamente removido e as estilizações que dependiam dele foram refeitas utilizando Tailwind).*
 
 ---
 

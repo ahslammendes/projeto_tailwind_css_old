@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="PizzaArte – Pizzas artesanais com ingredientes frescos e sabor inigualável. Conheça nosso cardápio e faça seu pedido online." />
-  <title>PizzaArte – Pizzaria Artesanal</title>
+  <meta name="theme-color" content="#F1E9DE" />
+  <meta name="description" content="PizzaArte – Pizzas artesanais com ingredientes frescos, fermentação lenta e sabor inigualável. Design editorial inspirado no Koisei Design System." />
+  <title>PizzaArte – Pizzaria Artesanal &amp; Editorial</title>
   <!-- Tailwind CSS v3 via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
+  <!-- Google Fonts (Editorial Typography) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Iconify Icons (Solar Linear) -->
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+  <!-- GSAP, ScrollTrigger & Lenis Smooth Scroll (Motion Engine do Design System) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <!-- Tailwind Config -->
   <script>
     tailwind.config = {
@@ -18,409 +25,700 @@
         extend: {
           colors: {
             pizza: {
-              primary:   '#E8400A',
-              secondary: '#FF6B35',
-              dark:      '#1A0A00',
-              cream:     '#FFF8F0',
-              text:      '#2C1810',
+              primary:   '#C4472F',
+              secondary: '#E8A54B',
+              dark:      '#241B15',
+              deep:      '#1A130E',
+              cream:     '#F1E9DE',
+              warm:      '#ECE4D9',
+              sand:      '#E9D4BD',
+              light:     '#EDE9DF',
+              text:      '#251C16',
               gray:      '#6B5B4E',
-              border:    '#EAD8C8',
+              border:    '#D8CEC2',
             }
           },
           fontFamily: {
-            titulo: ['"Playfair Display"', 'Georgia', 'serif'],
-            corpo:  ['"Poppins"', 'sans-serif'],
+            titulo: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            corpo:  ['"Space Grotesk"', 'sans-serif'],
           }
         }
       }
     }
   </script>
-  <!-- Estilos mínimos para animações e gradientes -->
-  <style>
-    body { font-family: 'Poppins', sans-serif; }
-    .grad-primary { background: linear-gradient(135deg, #E8400A 0%, #FF6B35 50%, #FFA500 100%); }
-    .grad-text { background: linear-gradient(135deg, #E8400A 0%, #FF6B35 50%, #FFA500 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .grad-hot { background: linear-gradient(135deg, #c0392b, #e74c3c); }
-    .grad-gold { background: linear-gradient(135deg, #B8860B, #FFD700); }
-    .anim-fade-up { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-    .anim-fade-up.visible { opacity: 1; transform: translateY(0); }
-    html { scroll-behavior: smooth; }
-  </style>
+  <!-- Estilos Customizados & Tokens de Motion -->
+  <link rel="stylesheet" href="css/main.css" />
 </head>
-<body class="bg-pizza-cream text-pizza-text leading-relaxed overflow-x-hidden">
+<body class="bg-pizza-cream text-pizza-text antialiased leading-relaxed overflow-x-hidden selection:bg-pizza-primary selection:text-pizza-cream">
+
+  <!-- ==================== PRELOADER ==================== -->
+  <div id="loader" class="fixed inset-0 z-[110] flex flex-col items-center justify-center bg-pizza-cream" style="clip-path: inset(0 0 0% 0);">
+    <!-- Ícone de Forno a Lenha Napolitano & Chama -->
+    <svg width="38" height="30" viewBox="0 0 38 30" fill="none" class="mb-5">
+      <path d="M3 27 H35 M6 27 V16 C6 8.8 11.8 3 19 3 C26.2 3 32 8.8 32 16 V27 M13 27 V20 C13 16.7 15.7 14 19 14 C22.3 14 25 16.7 25 20 V27 M19 18.5 C17.5 20.5 17.5 23 19 24.5 C20.5 23 20.5 20.5 19 18.5 Z" stroke="#C4472F" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    <div id="loaderWord" class="font-titulo text-4xl md:text-5xl tracking-[0.5em] text-pizza-text font-medium">PIZZAARTE</div>
+    <div class="mt-8 w-48 relative">
+      <div class="h-px w-full bg-pizza-text/15"></div>
+      <div id="loaderBar" class="h-px absolute left-0 top-0 origin-left bg-pizza-text w-full" style="transform: scaleX(0);"></div>
+    </div>
+    <div id="loaderPct" class="mt-3 text-xs tracking-[0.2em] text-pizza-text/60 tabular-nums">0%</div>
+  </div>
+
+  <!-- ==================== FILM GRAIN OVERLAY ==================== -->
+  <canvas id="grain" class="fixed inset-0 w-full h-full pointer-events-none z-[80] opacity-[0.045] mix-blend-overlay"></canvas>
+
+  <!-- ==================== CUSTOM CURSOR ==================== -->
+  <div id="curDot" class="fixed top-0 left-0 w-2 h-2 rounded-full pointer-events-none hidden md:block z-[100] bg-white mix-blend-difference"></div>
+  <div id="curRing" class="fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none hidden md:flex items-center justify-center text-xs z-[100] border border-white text-white mix-blend-difference transition-[width,height,margin] duration-300"></div>
+
+  <!-- ==================== FIXED PROGRESS RAIL ==================== -->
+  <div id="progress-rail" class="fixed left-6 top-1/2 -translate-y-1/2 z-[85] hidden lg:flex flex-col items-center gap-4 pointer-events-none">
+    <div class="relative h-40 w-px bg-pizza-text/20">
+      <div id="railFill" class="absolute top-0 left-0 w-full h-full origin-top bg-pizza-primary" style="transform: scaleY(0);"></div>
+    </div>
+    <div id="secIdx" class="text-xs tracking-[0.15em] text-pizza-text/55 tabular-nums" style="writing-mode: vertical-rl;">01 / 05</div>
+  </div>
 
   <!-- ==================== HEADER / NAVBAR ==================== -->
-  <!-- Classes: fixed, top-0, left-0, right-0, z-50, transition-all -->
-  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-    <!-- Classes: flex, items-center, justify-between, gap-6, max-w-7xl, mx-auto, px-6, py-5 -->
-    <nav id="navbar" class="flex items-center justify-between gap-6 w-full max-w-7xl mx-auto px-6 py-5">
-      <!-- Classes: flex, items-center, gap-2.5 -->
-      <div id="logo" class="flex items-center gap-2.5 cursor-default">
-        <!-- Classes: text-3xl -->
-        <span id="logo-icon" class="text-3xl leading-none">&#127829;</span>
-        <!-- Classes: font-titulo, text-2xl, font-black, text-white, tracking-tight -->
-        <span id="logo-text" class="font-titulo text-2xl font-black text-white tracking-tight">PizzaArte</span>
-      </div>
-      <!-- Classes: hidden, md:flex, items-center, gap-2, list-none -->
-      <ul id="nav-links" class="hidden md:flex items-center gap-2 list-none m-0 p-0">
-        <li><a href="#hero" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Início</a></li>
-        <li><a href="#sobre" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Sobre</a></li>
-        <li><a href="#cardapio" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Cardápio</a></li>
-        <li><a href="#depoimentos" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Avaliações</a></li>
-        <li><a href="#contato" class="text-white/85 text-sm font-medium px-3.5 py-2 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Contato</a></li>
+  <header id="header" class="fixed top-0 left-0 right-0 z-[90] nav--night">
+    <nav id="navbar" class="nav-shell flex items-center justify-between px-6 md:px-12 w-full">
+      <a href="#hero" id="logo" class="flex items-center gap-3 no-underline group">
+        <svg width="26" height="21" viewBox="0 0 38 30" fill="none" class="transition-transform duration-300 group-hover:scale-105">
+          <path d="M3 27 H35 M6 27 V16 C6 8.8 11.8 3 19 3 C26.2 3 32 8.8 32 16 V27 M13 27 V20 C13 16.7 15.7 14 19 14 C22.3 14 25 16.7 25 20 V27" stroke="#C4472F" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        <span id="logo-text" class="nav-ink text-sm font-medium tracking-[0.2em] text-pizza-text uppercase">PIZZAARTE</span>
+      </a>
+
+      <ul id="nav-links" class="hidden md:flex items-center gap-8 list-none m-0 p-0">
+        <li><a href="#hero" class="u-link nav-ink text-xs tracking-[0.12em] text-pizza-text no-underline py-1">Início</a></li>
+        <li><a href="#sobre" class="u-link nav-ink text-xs tracking-[0.12em] text-pizza-text no-underline py-1">Manifesto</a></li>
+        <li><a href="#cardapio" class="u-link nav-ink text-xs tracking-[0.12em] text-pizza-text no-underline py-1">Estações</a></li>
+        <li><a href="#depoimentos" class="u-link nav-ink text-xs tracking-[0.12em] text-pizza-text no-underline py-1">Crônicas</a></li>
+        <li><a href="#contato" class="u-link nav-ink text-xs tracking-[0.12em] text-pizza-text no-underline py-1">Visitar</a></li>
       </ul>
-      <!-- Classes: inline-flex, items-center, justify-center, text-white, font-semibold, px-7, py-3, rounded-full, border-none, cursor-pointer, shadow-lg, hover:-translate-y-0.5 -->
-      <button id="btn-pedido-nav" class="grad-primary inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-full border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300">Fazer Pedido</button>
+
+      <div class="flex items-center gap-4">
+        <span class="nav-ink text-xs tracking-[0.2em] hidden sm:inline text-pizza-text opacity-75 uppercase">450°C</span>
+        <a href="#cardapio" id="btn-pedido-nav" class="nav-ink nav-border hidden sm:inline-block text-xs tracking-[0.08em] rounded-full px-5 py-2.5 border border-pizza-text/40 text-pizza-text no-underline transition-colors duration-300 hover:!bg-pizza-text hover:!text-pizza-cream">
+          Reservar Mesa
+        </a>
+        <button id="btn-mobile-menu" type="button" class="md:hidden nav-ink bg-transparent border-0 p-1 cursor-pointer text-pizza-text" aria-label="Abrir menu">
+          <iconify-icon icon="solar:hamburger-menu-linear" width="24" stroke-width="1.5"></iconify-icon>
+        </button>
+      </div>
     </nav>
+    <!-- Menu Mobile Responsivo -->
+    <div id="mobile-menu" class="md:hidden hidden bg-pizza-dark/95 backdrop-blur-md border-b border-pizza-light/15 px-6 py-6">
+      <ul class="flex flex-col gap-4 list-none m-0 p-0">
+        <li><a href="#hero" class="mobile-link text-xs uppercase tracking-[0.2em] text-pizza-light no-underline block py-1">Início</a></li>
+        <li><a href="#sobre" class="mobile-link text-xs uppercase tracking-[0.2em] text-pizza-light no-underline block py-1">Manifesto</a></li>
+        <li><a href="#cardapio" class="mobile-link text-xs uppercase tracking-[0.2em] text-pizza-light no-underline block py-1">Estações</a></li>
+        <li><a href="#depoimentos" class="mobile-link text-xs uppercase tracking-[0.2em] text-pizza-light no-underline block py-1">Crônicas</a></li>
+        <li><a href="#contato" class="mobile-link text-xs uppercase tracking-[0.2em] text-pizza-light no-underline block py-1">Visitar</a></li>
+      </ul>
+    </div>
   </header>
 
-  <!-- ==================== HERO SECTION ==================== -->
-  <!-- Classes: relative, min-h-screen, flex, items-center, justify-center, bg-cover, bg-center, bg-no-repeat -->
-  <section id="hero" class="relative min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat pt-28 pb-20 px-6" style="background-image: url('img/pizza_hero.jpg');">
-    <!-- Classes: absolute, inset-0 -->
-    <div id="hero-overlay" class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26,10,0,0.85) 0%, rgba(232,64,10,0.4) 60%, rgba(26,10,0,0.6) 100%);"></div>
-    <!-- Classes: relative, z-10, text-center, max-w-3xl, mx-auto -->
-    <div id="hero-content" class="relative z-10 text-center max-w-3xl mx-auto">
-      <!-- Classes: inline-block, bg-white/15, border, border-white/30, text-white, text-sm, font-semibold, tracking-wide, px-5, py-2, rounded-full, mb-6, backdrop-blur-sm -->
-      <span id="hero-badge" class="inline-block bg-white/15 border border-white/30 text-white text-sm font-semibold tracking-wide px-5 py-2 rounded-full mb-6 backdrop-blur-sm">&#10024; Artesanal &amp; Premium</span>
-      <!-- Classes: font-titulo, text-4xl, md:text-6xl, lg:text-7xl, font-black, text-white, leading-none, mb-6 -->
-      <h1 id="hero-title" class="font-titulo text-4xl md:text-6xl lg:text-7xl font-black text-white leading-none mb-6" style="text-shadow: 0 4px 20px rgba(0,0,0,0.3);">
-        A Pizza que<br /><em class="grad-text italic">você merece</em>
-      </h1>
-      <!-- Classes: text-base, md:text-lg, text-white/85, mb-10, max-w-xl, mx-auto -->
-      <p id="hero-subtitle" class="text-base md:text-lg text-white/85 mb-10 max-w-xl mx-auto">
-        Ingredientes frescos, massa fermentada por 48h e um sabor que conta uma história a cada fatia.
-      </p>
-      <!-- Classes: flex, items-center, justify-center, flex-wrap, gap-4, mb-16 -->
-      <div id="hero-btns" class="flex items-center justify-center flex-wrap gap-4 mb-16">
-        <!-- Classes: inline-flex, items-center, justify-center, text-white, font-semibold, text-base, px-9, py-4, rounded-full -->
-        <a href="#cardapio" id="btn-ver-cardapio" class="grad-primary inline-flex items-center justify-center text-white font-corpo text-base font-semibold px-9 py-4 rounded-full no-underline shadow-lg hover:-translate-y-0.5 transition-all duration-300">Ver Cardápio</a>
-        <!-- Classes: inline-flex, bg-transparent, text-white, border-2, border-white/70, backdrop-blur-sm -->
-        <a href="#sobre" id="btn-nossa-historia" class="inline-flex items-center justify-center bg-transparent text-white font-corpo text-base font-semibold px-9 py-4 rounded-full no-underline border-2 border-white/70 backdrop-blur-sm hover:bg-white/15 hover:border-white transition-all duration-300">Nossa História</a>
-      </div>
-      <!-- Classes: flex, items-center, justify-center, flex-wrap, border, border-white/20, rounded-2xl, px-10, py-6, bg-white/10, backdrop-blur-md, max-w-xl, mx-auto -->
-      <div id="hero-stats" class="flex items-center justify-center flex-wrap border border-white/20 rounded-2xl px-10 py-6 bg-white/10 backdrop-blur-md max-w-xl mx-auto">
-        <!-- Classes: flex, flex-col, items-center, px-7 -->
-        <div class="flex flex-col items-center px-7 gap-0.5">
-          <!-- Classes: text-xl, font-bold, text-pizza-secondary -->
-          <strong class="text-xl font-bold text-pizza-secondary">+10 anos</strong>
-          <!-- Classes: text-xs, text-white/70, uppercase, tracking-wider -->
-          <span class="text-xs text-white/70 uppercase tracking-wider">de tradição</span>
-        </div>
-        <!-- Classes: w-px, h-10, bg-white/20 -->
-        <div class="w-px h-10 bg-white/20"></div>
-        <div class="flex flex-col items-center px-7 gap-0.5">
-          <strong class="text-xl font-bold text-pizza-secondary">+50 sabores</strong>
-          <span class="text-xs text-white/70 uppercase tracking-wider">no cardápio</span>
-        </div>
-        <div class="w-px h-10 bg-white/20"></div>
-        <div class="flex flex-col items-center px-7 gap-0.5">
-          <strong class="text-xl font-bold text-pizza-secondary">4.9 &#11088;</strong>
-          <span class="text-xs text-white/70 uppercase tracking-wider">avaliação média</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <main class="relative">
 
-  <!-- ==================== SOBRE SECTION ==================== -->
-  <!-- Classes: py-24, bg-white -->
-  <section id="sobre" class="py-24 bg-white">
-    <!-- Classes: w-full, max-w-7xl, mx-auto, px-6 -->
-    <div class="w-full max-w-7xl mx-auto px-6">
-      <!-- Classes: flex, flex-col, lg:flex-row, items-center, gap-16, flex-wrap -->
-      <div id="sobre-content" class="flex flex-col lg:flex-row items-center gap-16 flex-wrap">
-        <!-- Classes: flex-1, min-w-0 -->
-        <div id="sobre-texto" class="flex-1 min-w-0" style="flex-basis: 420px;">
-          <!-- Classes: inline-block, text-white, text-xs, font-semibold, tracking-widest, uppercase, px-5, py-1.5, rounded-full, mb-4 -->
-          <span class="grad-primary inline-block text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Quem Somos</span>
-          <!-- Classes: font-titulo, text-3xl, md:text-4xl, font-black, leading-tight, text-pizza-text, mb-4 -->
-          <h2 id="sobre-titulo" class="font-titulo text-3xl md:text-4xl font-black leading-tight text-pizza-text mb-4">Uma paixão transformada em sabor</h2>
-          <!-- Classes: text-base, text-pizza-gray, mb-4 -->
-          <p class="text-base text-pizza-gray mb-4">
-            Fundada em 2014, a <strong>PizzaArte</strong> nasceu da paixão pela culinária italiana autêntica. Cada pizza é preparada à mão, com massa de fermentação lenta e ingredientes selecionados diretamente de produtores locais.
-          </p>
-          <p class="text-base text-pizza-gray mb-4">
-            Nosso forno a lenha atinge 450°C, garantindo uma pizza com borda crocante por fora e macia por dentro.
-          </p>
-          <!-- Classes: list-none, mt-7, p-0, flex, flex-col, gap-3 -->
-          <ul id="sobre-features" class="list-none mt-7 p-0 flex flex-col gap-3">
-            <!-- Classes: flex, items-center, gap-3, text-sm, font-medium, text-pizza-text, px-4, py-3, border, border-pizza-border, rounded-xl, bg-pizza-cream, hover:border-pizza-primary, hover:bg-orange-50, hover:translate-x-1, transition-all, duration-300 -->
-            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
-              <span class="text-lg flex-shrink-0">&#127807;</span> Ingredientes 100% frescos e locais
-            </li>
-            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
-              <span class="text-lg flex-shrink-0">&#128293;</span> Forno a lenha artesanal
-            </li>
-            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
-              <span class="text-lg flex-shrink-0">&#9203;</span> Entrega em até 40 minutos
-            </li>
-            <li class="flex items-center gap-3 text-sm font-medium text-pizza-text px-4 py-3 border border-pizza-border rounded-xl bg-pizza-cream hover:border-pizza-primary hover:bg-orange-50 hover:translate-x-1 transition-all duration-300">
-              <span class="text-lg flex-shrink-0">&#128154;</span> Opções vegetarianas e veganas
-            </li>
-          </ul>
-        </div>
-        <!-- Classes: flex-1, relative, min-w-0 -->
-        <div id="sobre-imagem" class="flex-1 relative min-w-0" style="flex-basis: 380px;">
-          <!-- Classes: w-full, h-96, lg:h-[480px], object-cover, rounded-2xl, border-4, border-pizza-border, block, shadow-xl -->
-          <img src="img/pizza_hero.jpg" alt="Pizza artesanal saindo do forno" id="img-sobre" class="w-full h-96 lg:h-[480px] object-cover rounded-2xl border-4 border-pizza-border block shadow-xl" />
-          <!-- Classes: absolute, -bottom-5, -left-5, rounded-xl, px-6, py-4, flex, flex-col, items-center, shadow-xl, border-4, border-white -->
-          <div id="sobre-tag" class="absolute -bottom-5 -left-5 grad-primary text-white rounded-xl px-6 py-4 flex flex-col items-center shadow-xl border-4 border-white">
-            <!-- Classes: font-titulo, text-4xl, font-black, leading-none -->
-            <span class="font-titulo text-4xl font-black leading-none">+10</span>
-            <!-- Classes: text-xs, font-semibold, uppercase, tracking-wider, opacity-90 -->
-            <span class="text-xs font-semibold uppercase tracking-wider opacity-90">Anos de experiência</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    <!-- ==================== 01 · HERO SECTION ==================== -->
+    <section id="hero" data-section="01" class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 pt-24 pb-20">
+      <!-- Imagem de Fundo com Escala & Parallax no Scroll -->
+      <div id="hero-bg" class="absolute inset-0 bg-cover bg-center bg-no-repeat will-change-transform" style="background-image: url('img/pizza_hero.jpg'); transform: scale(1.12);"></div>
+      <!-- Camadas de atmosfera e vinheta cinematográfica -->
+      <div id="hero-overlay" class="absolute inset-0 bg-gradient-to-b from-pizza-deep/80 via-pizza-dark/65 to-pizza-deep/90"></div>
+      <div class="pointer-events-none absolute inset-0 film-vignette"></div>
 
-  <!-- ==================== CARDAPIO SECTION ==================== -->
-  <!-- Classes: py-24, bg-pizza-cream -->
-  <section id="cardapio" class="py-24 bg-pizza-cream">
-    <div class="w-full max-w-7xl mx-auto px-6">
-      <!-- Classes: text-center, mb-14 -->
-      <div id="cardapio-header" class="text-center mb-14">
-        <span class="grad-primary inline-block text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Nosso Cardápio</span>
-        <h2 id="cardapio-titulo" class="font-titulo text-3xl md:text-4xl font-black leading-tight text-pizza-text mb-4">Escolha a sua favorita</h2>
-        <!-- Classes: text-lg, text-pizza-gray, mb-12, max-w-xl, mx-auto (já na section-desc) -->
-        <p id="cardapio-desc" class="text-lg text-pizza-gray max-w-xl mx-auto">
-          Cada pizza conta uma história. Qual delas vai ser a sua?
+      <!-- Conteúdo Editorial Central -->
+      <div id="hero-content" class="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto mt-[4vh]">
+        <!-- Eyebrow com Line Reveal -->
+        <div class="overflow-hidden mb-6">
+          <p id="hero-badge" class="heroLine text-xs uppercase tracking-[0.32em] text-pizza-light/90 flex items-center justify-center gap-3">
+            <span class="inline-block w-1.5 h-1.5 bg-pizza-primary"></span>
+            — Farinha Orgânica, Forno a Lenha &amp; 48h de Fermentação
+          </p>
+        </div>
+
+        <!-- Display Title Cormorant Garamond com Line Reveal (.heroLine) -->
+        <h1 id="hero-title" class="font-titulo font-medium text-pizza-light tracking-tight leading-[0.95] mb-6" style="font-size: clamp(3.4rem, 10vw, 9.5rem); letter-spacing: -0.015em; text-shadow: 0 2px 40px rgba(37,28,22,0.45);">
+          <span class="block overflow-hidden"><span class="heroLine block">A Arte da</span></span>
+          <span class="block overflow-hidden"><span class="heroLine block"><em class="italic font-normal text-pizza-sand">Fermentação</em> Lenta</span></span>
+        </h1>
+
+        <!-- Linha divisória minimalista e subtítulo (.heroFade) -->
+        <div class="heroFade mt-4 h-px w-16 bg-pizza-light/60"></div>
+        <p id="hero-subtitle" class="heroFade mt-5 text-sm md:text-base text-pizza-light/85 tracking-[0.12em] max-w-lg mx-auto font-light uppercase">
+          PizzaArte · Tradição Napolitana desde 2014
         </p>
-      </div>
 
-      <!-- GRID: Classes: grid, grid-cols-1, sm:grid-cols-2, lg:grid-cols-3, gap-7 -->
-      <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-
-        <!-- Card 1 Frango -->
-        <!-- Classes: bg-white, rounded-2xl, overflow-hidden, border, border-pizza-border, shadow-lg, hover:shadow-2xl, hover:-translate-y-2, transition-all, duration-300 -->
-        <article id="card-frango" class="anim-fade-up bg-white rounded-2xl overflow-hidden border border-pizza-border shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-          <!-- Classes: relative, overflow-hidden -->
-          <div class="relative overflow-hidden">
-            <!-- Classes: w-full, h-60, object-cover, block, hover:scale-105, transition-transform, duration-500 -->
-            <img src="img/pizza_frango.jpg" alt="Pizza de Frango com Catupiry" class="w-full h-60 object-cover block transition-transform duration-500 hover:scale-105" />
-            <!-- Classes: absolute, top-3.5, left-3.5, text-white, text-xs, font-bold, px-3, py-1, rounded-full, border, border-white/40 -->
-            <span class="absolute top-3.5 left-3.5 grad-primary text-white text-xs font-bold px-3 py-1 rounded-full border border-white/40">Mais Pedida</span>
-          </div>
-          <!-- Classes: p-6, flex, flex-col, gap-2.5 -->
-          <div class="p-6 flex flex-col gap-2.5">
-            <!-- Classes: flex, items-start, justify-between, gap-3 -->
-            <div class="flex items-start justify-between gap-3">
-              <!-- Classes: font-titulo, text-xl, font-bold, text-pizza-text, leading-snug -->
-              <h3 class="font-titulo text-xl font-bold text-pizza-text leading-snug">Frango &amp; Catupiry</h3>
-              <!-- Classes: text-xl, font-bold, text-pizza-primary, whitespace-nowrap, flex-shrink-0 -->
-              <span class="text-xl font-bold text-pizza-primary whitespace-nowrap flex-shrink-0">R$ 49,90</span>
-            </div>
-            <!-- Classes: text-sm, text-pizza-gray, leading-relaxed -->
-            <p class="text-sm text-pizza-gray leading-relaxed">Frango desfiado temperado, catupiry cremoso, azeitonas e orégano. Uma combinação clássica e irresistível.</p>
-            <!-- Classes: flex, gap-2, flex-wrap -->
-            <div class="flex gap-2 flex-wrap">
-              <!-- Classes: inline-block, bg-orange-50, text-pizza-primary, text-xs, font-semibold, px-3, py-1, rounded-full, border, border-orange-200 -->
-              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#127829; Frango</span>
-              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#129472; Catupiry</span>
-            </div>
-            <!-- Classes: w-full, mt-4, rounded-xl -->
-            <button class="grad-primary w-full mt-4 inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-xl border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300" id="btn-frango">Pedir Agora</button>
-          </div>
-        </article>
-
-        <!-- Card 2 Pepperoni -->
-        <!-- Classes: border-pizza-primary, border-2 (destaque) -->
-        <article id="card-pepperoni" class="anim-fade-up bg-white rounded-2xl overflow-hidden border-2 border-pizza-primary shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-          <div class="relative overflow-hidden">
-            <img src="img/pizza_pepperoni.jpg" alt="Pizza de Pepperoni" class="w-full h-60 object-cover block transition-transform duration-500 hover:scale-105" />
-            <span class="absolute top-3.5 left-3.5 grad-hot text-white text-xs font-bold px-3 py-1 rounded-full border border-white/40">&#128293; Hot</span>
-          </div>
-          <div class="p-6 flex flex-col gap-2.5">
-            <div class="flex items-start justify-between gap-3">
-              <h3 class="font-titulo text-xl font-bold text-pizza-text leading-snug">Pepperoni Clássico</h3>
-              <span class="text-xl font-bold text-pizza-primary whitespace-nowrap flex-shrink-0">R$ 54,90</span>
-            </div>
-            <p class="text-sm text-pizza-gray leading-relaxed">Generosas fatias de pepperoni sobre molho de tomate artesanal e queijo mozarela derretido.</p>
-            <div class="flex gap-2 flex-wrap">
-              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#127798; Picante</span>
-              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#129472; Mozarela</span>
-            </div>
-            <button class="grad-primary w-full mt-4 inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-xl border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300" id="btn-pepperoni">Pedir Agora</button>
-          </div>
-        </article>
-
-        <!-- Card 3 Quatro Queijos -->
-        <article id="card-queijos" class="anim-fade-up bg-white rounded-2xl overflow-hidden border border-pizza-border shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-          <div class="relative overflow-hidden">
-            <img src="img/pizza_quatro_queijos.jpg" alt="Pizza Quatro Queijos" class="w-full h-60 object-cover block transition-transform duration-500 hover:scale-105" />
-            <span class="absolute top-3.5 left-3.5 grad-gold text-amber-950 text-xs font-bold px-3 py-1 rounded-full border border-white/40">&#11088; Premium</span>
-          </div>
-          <div class="p-6 flex flex-col gap-2.5">
-            <div class="flex items-start justify-between gap-3">
-              <h3 class="font-titulo text-xl font-bold text-pizza-text leading-snug">Quatro Queijos</h3>
-              <span class="text-xl font-bold text-pizza-primary whitespace-nowrap flex-shrink-0">R$ 59,90</span>
-            </div>
-            <p class="text-sm text-pizza-gray leading-relaxed">Mozarela, gorgonzola, parmesão e provolone sobre massa folhada. Para os verdadeiros amantes de queijo.</p>
-            <div class="flex gap-2 flex-wrap">
-              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#129472; 4 Queijos</span>
-              <span class="inline-block bg-orange-50 text-pizza-primary text-xs font-semibold px-3 py-1 rounded-full border border-orange-200">&#127829; Especial</span>
-            </div>
-            <button class="grad-primary w-full mt-4 inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3 rounded-xl border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300" id="btn-queijos">Pedir Agora</button>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== DEPOIMENTOS ==================== -->
-  <!-- Classes: py-24, bg-pizza-dark -->
-  <section id="depoimentos" class="py-24 bg-pizza-dark">
-    <div class="w-full max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <!-- Classes: bg-white/20, border, border-white/40 (badge light) -->
-        <span class="inline-block bg-white/20 border border-white/40 text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Avaliações</span>
-        <!-- Classes: text-white -->
-        <h2 class="font-titulo text-3xl md:text-4xl font-black leading-tight text-white mb-4">O que dizem nossos clientes</h2>
-      </div>
-      <!-- GRID: Classes: grid, grid-cols-1, md:grid-cols-3, gap-6 -->
-      <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Classes: bg-white/5, border, border-white/10, rounded-2xl, p-8, hover:bg-white/10, hover:border-pizza-primary/40, hover:-translate-y-1, hover:shadow-xl -->
-        <div class="anim-fade-up bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-pizza-primary/40 hover:-translate-y-1 hover:shadow-xl transition-all duration-300" id="review-1">
-          <!-- Classes: text-lg, mb-4 -->
-          <p class="text-lg mb-4">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
-          <!-- Classes: text-sm, text-white/80, italic, leading-relaxed, mb-5 -->
-          <p class="text-sm text-white/80 italic leading-relaxed mb-5">"A melhor pizza que já comi! A massa é simplesmente perfeita, crocante e leve ao mesmo tempo. Recomendo demais!"</p>
-          <!-- Classes: text-sm, text-white/50 -->
-          <p class="text-sm text-white/50">— <strong class="text-pizza-secondary">Ana Souza</strong>, cliente desde 2020</p>
-        </div>
-        <div class="anim-fade-up bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-pizza-primary/40 hover:-translate-y-1 hover:shadow-xl transition-all duration-300" id="review-2">
-          <p class="text-lg mb-4">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
-          <p class="text-sm text-white/80 italic leading-relaxed mb-5">"Pepperoni incrível! Chegou quentinha e o sabor é diferente de qualquer outra pizzaria. Virei fã!"</p>
-          <p class="text-sm text-white/50">— <strong class="text-pizza-secondary">Carlos Lima</strong>, cliente desde 2021</p>
-        </div>
-        <div class="anim-fade-up bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-pizza-primary/40 hover:-translate-y-1 hover:shadow-xl transition-all duration-300" id="review-3">
-          <p class="text-lg mb-4">&#11088;&#11088;&#11088;&#11088;&#11088;</p>
-          <p class="text-sm text-white/80 italic leading-relaxed mb-5">"Quatro queijos perfeita! O gorgonzola não é enjoativo e o equilíbrio dos queijos é impecável. Já pedi 3x essa semana!"</p>
-          <p class="text-sm text-white/50">— <strong class="text-pizza-secondary">Fernanda Costa</strong>, cliente desde 2019</p>
+        <!-- Ações Hero -->
+        <div id="hero-btns" class="heroFade flex items-center justify-center flex-wrap gap-5 mt-10">
+          <a href="#cardapio" id="btn-ver-cardapio" class="inline-flex items-center gap-2.5 bg-pizza-primary text-pizza-cream text-xs uppercase tracking-[0.16em] font-medium px-8 py-4 rounded-full no-underline shadow-lg hover:bg-pizza-light hover:text-pizza-text transition-all duration-300">
+            Explorar Estações
+            <iconify-icon icon="solar:arrow-right-linear" width="16" stroke-width="1.5"></iconify-icon>
+          </a>
+          <a href="#sobre" id="btn-nossa-historia" class="inline-flex items-center gap-2 bg-transparent text-pizza-light text-xs uppercase tracking-[0.16em] font-medium px-8 py-4 rounded-full no-underline border border-pizza-light/40 backdrop-blur-sm hover:bg-pizza-light hover:text-pizza-text transition-all duration-300">
+            Nosso Manifesto
+          </a>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ==================== CONTATO / CTA ==================== -->
-  <!-- Classes: py-24, bg-white -->
-  <section id="contato" class="py-24 bg-white">
-    <div class="w-full max-w-7xl mx-auto px-6">
-      <!-- Classes: flex, flex-col, lg:flex-row, gap-16, flex-wrap, items-start -->
-      <div id="contato-content" class="flex flex-col lg:flex-row gap-16 flex-wrap items-start">
-        <!-- Classes: flex-1, min-w-0 -->
-        <div id="contato-info" class="flex-1 min-w-0" style="flex-basis: 320px;">
-          <span class="grad-primary inline-block text-white text-xs font-semibold tracking-widest uppercase px-5 py-1.5 rounded-full mb-4">Fale Conosco</span>
-          <h2 class="font-titulo text-3xl md:text-4xl font-black leading-tight text-pizza-text mb-4">Pronto para pedir?</h2>
-          <!-- Classes: text-base, text-pizza-gray, mb-8 -->
-          <p class="text-base text-pizza-gray mb-8">Atendemos todos os dias das 17h às 23h. Delivery e retirada no balcão disponíveis.</p>
-          <!-- Classes: flex, flex-col, gap-3.5 -->
-          <div id="contato-detalhes" class="flex flex-col gap-3.5">
-            <!-- Classes: text-base, text-pizza-text, font-medium, px-4, py-3.5, bg-pizza-cream, border, border-pizza-border, rounded-xl, hover:border-pizza-primary, hover:bg-orange-50, transition-all, duration-300 -->
-            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128205; Rua das Pizzas, 42 – Centro</p>
-            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128222; (11) 99999-0000</p>
-            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128231; contato@pizzaarte.com.br</p>
-            <p class="text-base text-pizza-text font-medium px-4 py-3.5 bg-pizza-cream border border-pizza-border rounded-xl hover:border-pizza-primary hover:bg-orange-50 transition-all duration-300">&#128336; Seg–Dom: 17h às 23h</p>
+      <!-- Scroll Cue Animado -->
+      <a href="#sobre" class="heroFade absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 no-underline group" aria-label="Rolar para manifesto">
+        <span class="text-[10px] uppercase tracking-[0.32em] text-pizza-light/75 group-hover:text-pizza-light transition-colors">SCROLL</span>
+        <div class="relative w-px h-10 bg-pizza-light/30">
+          <div class="absolute left-1/2 top-0 w-1.5 h-1.5 rounded-full bg-pizza-light animate-scroll-dot"></div>
+        </div>
+      </a>
+    </section>
+
+    <!-- ==================== 02 · SOBRE / MANIFESTO ==================== -->
+    <section id="sobre" data-section="02" class="relative z-20 -mt-8 rounded-t-[32px] bg-pizza-cream py-24 md:py-36 overflow-hidden border-t border-pizza-text/10">
+      <div class="pointer-events-none absolute inset-0 paper-vignette"></div>
+
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative">
+        <!-- Eyebrow 01 -->
+        <p class="anim-fade-up text-xs uppercase mb-10 flex items-center gap-3 tracking-[0.32em] text-pizza-text">
+          <span class="inline-block w-1.5 h-1.5 bg-pizza-primary"></span>
+          — 01 · Nosso Manifesto
+        </p>
+
+        <!-- Manifesto Heading com Line Reveal (.mLine) e Image Capsules animadas (.mImg) -->
+        <h2 id="sobre-titulo" class="manifesto font-titulo font-normal tracking-tight text-pizza-text max-w-[64ch]" style="font-size: clamp(2.1rem, 5.2vw, 5.5rem); line-height: 1.08; letter-spacing: -0.015em;">
+          <span class="mLine block overflow-hidden"><span class="block">Da farinha pura ao calor vivo,</span></span>
+          <span class="mLine block overflow-hidden">
+            <span class="block">cultivamos o <em class="italic">tempo lento</em>
+              <span class="mImg hidden md:inline-block align-middle overflow-hidden rounded-full mx-2 border border-pizza-text/20 shadow-inner" style="width: 0px; height: 66px;">
+                <img src="img/pizza_hero.jpg" alt="Forno a lenha artesanal" class="h-full w-[140px] object-cover" />
+              </span>
+              em cada dobra,
+            </span>
+          </span>
+          <span class="mLine block overflow-hidden"><span class="block">onde a chama a 450°C encontra</span></span>
+          <span class="mLine block overflow-hidden">
+            <span class="block">ingredientes de
+              <span class="mImg hidden md:inline-block align-middle overflow-hidden rounded-full mx-2 border border-pizza-text/20 shadow-inner" style="width: 0px; height: 66px;">
+                <img src="img/pizza_quatro_queijos.jpg" alt="Queijos selecionados" class="h-full w-[140px] object-cover" />
+              </span>
+              <em class="italic text-pizza-primary">origem local</em>.
+            </span>
+          </span>
+        </h2>
+
+        <!-- Grid Assimétrico: Imagem com Plate Frame + Lede Editorial (Koisei Lede & Plate Frame) -->
+        <div id="sobre-content" class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mt-20 items-start">
+          <!-- Plate Frame Image (Colunas 1 a 6) -->
+          <div id="sobre-imagem" class="anim-fade-up lg:col-span-6 relative">
+            <div class="relative h-80 sm:h-96 lg:h-[440px] overflow-hidden rounded">
+              <div class="absolute -inset-[10px] border border-pizza-text/15 pointer-events-none z-10 rounded"></div>
+              <img src="img/pizza_hero.jpg" alt="Pizza artesanal saindo do forno" id="img-sobre" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" style="transform: scale(1.08);" />
+            </div>
+            <div id="sobre-tag" class="mt-4 flex items-center justify-between text-xs tracking-[0.2em] uppercase text-pizza-text/60 border-b border-pizza-text/15 pb-3">
+              <span>Forno Napolitano · Lenha de Carvalho</span>
+              <span class="tabular-nums text-pizza-primary font-medium">EST. 2014</span>
+            </div>
+          </div>
+
+          <!-- Lede + Pilares Artesanais (Colunas 7 a 12) -->
+          <div id="sobre-texto" class="anim-fade-up lg:col-span-6 lg:pl-8 flex flex-col justify-between">
+            <div class="max-w-[36em]">
+              <p class="leading-[1.75] text-pizza-text/80 mb-5" style="font-size: clamp(1rem, 1.15vw, 1.185rem);">
+                Fundada em 2014, a <strong>PizzaArte</strong> nasceu do respeito absoluto pelo ingrediente e pela paciência. Nossa massa repousa por 48 horas em maturação controlada, resultando em uma estrutura alveolada, leve e de digestibilidade incomparável.
+              </p>
+              <p class="leading-[1.75] text-pizza-text/70 text-sm mb-8">
+                Não utilizamos atalhos: cada molho é feito com tomates San Marzano esmagados à mão e folhas de manjericão colhidas no dia.
+              </p>
+            </div>
+
+            <!-- Lista de Pilares estilo Editorial Koisei -->
+            <ul id="sobre-features" class="list-none m-0 p-0 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-pizza-text/15 pt-6">
+              <li class="flex items-start gap-3 py-2">
+                <span class="inline-block w-1.5 h-1.5 bg-pizza-primary mt-2 flex-shrink-0"></span>
+                <div>
+                  <strong class="block text-xs uppercase tracking-[0.16em] text-pizza-text">Produtores Locais</strong>
+                  <span class="text-xs text-pizza-text/65">Hortaliças e laticínios frescos do dia</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 py-2">
+                <span class="inline-block w-1.5 h-1.5 bg-pizza-primary mt-2 flex-shrink-0"></span>
+                <div>
+                  <strong class="block text-xs uppercase tracking-[0.16em] text-pizza-text">Forno a 450°C</strong>
+                  <span class="text-xs text-pizza-text/65">Assada em 90 segundos na pedra vulcânica</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 py-2">
+                <span class="inline-block w-1.5 h-1.5 bg-pizza-primary mt-2 flex-shrink-0"></span>
+                <div>
+                  <strong class="block text-xs uppercase tracking-[0.16em] text-pizza-text">Entrega Térmica</strong>
+                  <span class="text-xs text-pizza-text/65">Embalagem respirável em até 40 min</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 py-2">
+                <span class="inline-block w-1.5 h-1.5 bg-pizza-primary mt-2 flex-shrink-0"></span>
+                <div>
+                  <strong class="block text-xs uppercase tracking-[0.16em] text-pizza-text">Curadoria Vegana</strong>
+                  <span class="text-xs text-pizza-text/65">Fermentados e queijos vegetais autorais</span>
+                </div>
+              </li>
+            </ul>
+
+            <div class="mt-8">
+              <a href="#cardapio" class="u-link inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-pizza-text no-underline font-medium">
+                Conhecer as criações da estação
+                <iconify-icon icon="solar:arrow-right-linear" width="16" stroke-width="1.5"></iconify-icon>
+              </a>
+            </div>
           </div>
         </div>
-        <!-- Classes: flex-1, min-w-0 -->
-        <div id="contato-form-wrapper" class="flex-1 min-w-0" style="flex-basis: 360px;">
-          <!-- Classes: bg-pizza-cream, border, border-pizza-border, rounded-3xl, p-10, flex, flex-col, gap-5 -->
-          <form id="contato-form" class="bg-pizza-cream border border-pizza-border rounded-3xl p-10 flex flex-col gap-5" onsubmit="return false;">
-            <!-- Classes: font-titulo, text-2xl, font-bold, text-pizza-text, mb-2 -->
-            <h3 class="font-titulo text-2xl font-bold text-pizza-text mb-2">Envie uma mensagem</h3>
-            <!-- Classes: flex, flex-col, gap-1.5 -->
-            <div class="flex flex-col gap-1.5">
-              <!-- Classes: text-sm, font-semibold, text-pizza-text, mb-0.5 -->
-              <label for="input-nome" class="text-sm font-semibold text-pizza-text mb-0.5">Seu nome</label>
-              <!-- Classes: w-full, px-4, py-3.5, border-2, border-pizza-border, rounded-xl, font-corpo, text-sm, text-pizza-text, bg-white, outline-none, focus:border-pizza-primary, focus:ring-2, focus:ring-pizza-primary/20, transition-all, duration-300 -->
-              <input type="text" id="input-nome" class="w-full px-4 py-3.5 border-2 border-pizza-border rounded-xl font-corpo text-sm text-pizza-text bg-white outline-none focus:border-pizza-primary focus:ring-2 focus:ring-pizza-primary/20 transition-all duration-300" placeholder="Ex: João Silva" />
+
+        <!-- Stat Counters (Koisei Data Display Component) -->
+        <div id="hero-stats" class="anim-fade-up grid grid-cols-2 md:grid-cols-4 gap-8 mt-24 pt-12 border-t border-pizza-text/15">
+          <div>
+            <div class="font-titulo font-medium tracking-tight text-pizza-text" style="font-size: clamp(2.5rem, 4.8vw, 4.2rem); line-height: 1;">
+              <span class="counter" data-to="48">0</span>h
             </div>
-            <div class="flex flex-col gap-1.5">
-              <label for="input-email" class="text-sm font-semibold text-pizza-text mb-0.5">E-mail</label>
-              <input type="email" id="input-email" class="w-full px-4 py-3.5 border-2 border-pizza-border rounded-xl font-corpo text-sm text-pizza-text bg-white outline-none focus:border-pizza-primary focus:ring-2 focus:ring-pizza-primary/20 transition-all duration-300" placeholder="seu@email.com" />
+            <p class="text-xs uppercase mt-2 tracking-[0.32em] text-pizza-text/55">Fermentação Lenta</p>
+          </div>
+          <div>
+            <div class="font-titulo font-medium tracking-tight text-pizza-text" style="font-size: clamp(2.5rem, 4.8vw, 4.2rem); line-height: 1;">
+              <span class="counter" data-to="450">0</span>°C
             </div>
-            <div class="flex flex-col gap-1.5">
-              <label for="input-msg" class="text-sm font-semibold text-pizza-text mb-0.5">Mensagem</label>
-              <!-- Classes: h-32, resize-y -->
-              <textarea id="input-msg" class="w-full px-4 py-3.5 border-2 border-pizza-border rounded-xl font-corpo text-sm text-pizza-text bg-white outline-none focus:border-pizza-primary focus:ring-2 focus:ring-pizza-primary/20 transition-all duration-300 h-32 resize-y" placeholder="Digite sua mensagem..."></textarea>
+            <p class="text-xs uppercase mt-2 tracking-[0.32em] text-pizza-text/55">Forno a Lenha</p>
+          </div>
+          <div>
+            <div class="font-titulo font-medium tracking-tight text-pizza-text" style="font-size: clamp(2.5rem, 4.8vw, 4.2rem); line-height: 1;">
+              +<span class="counter" data-to="50">0</span>
             </div>
-            <!-- Classes: w-full -->
-            <button type="submit" id="btn-enviar" class="grad-primary w-full inline-flex items-center justify-center text-white font-corpo text-sm font-semibold px-7 py-3.5 rounded-full border-none cursor-pointer shadow-lg hover:-translate-y-0.5 transition-all duration-300">Enviar Mensagem &#127829;</button>
-          </form>
+            <p class="text-xs uppercase mt-2 tracking-[0.32em] text-pizza-text/55">Receitas Autorais</p>
+          </div>
+          <div>
+            <div class="font-titulo font-medium tracking-tight text-pizza-text" style="font-size: clamp(2.5rem, 4.8vw, 4.2rem); line-height: 1;">
+              <span class="counter" data-to="12">0</span> anos
+            </div>
+            <p class="text-xs uppercase mt-2 tracking-[0.32em] text-pizza-text/55">Tradição &amp; Ofício</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ==================== 03 · CARDÁPIO / ESTAÇÕES (KOISEI STATION CARDS) ==================== -->
+    <section id="cardapio" data-section="03" class="relative z-20 py-28 md:py-36 bg-pizza-warm border-t border-pizza-text/10 overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 paper-vignette"></div>
+
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative">
+        <!-- Cabeçalho da Seção estilo Gallery do Koisei -->
+        <div id="cardapio-header" class="flex flex-col md:flex-row md:items-end justify-between pb-14 md:pb-20 gap-6">
+          <div>
+            <p class="text-xs uppercase mb-4 flex items-center gap-3 tracking-[0.32em] text-pizza-text">
+              <span class="inline-block w-1.5 h-1.5 bg-pizza-primary"></span>
+              — 02 · Estações de Sabor
+            </p>
+            <h2 id="cardapio-titulo" class="font-titulo font-medium tracking-tight text-pizza-text leading-none" style="font-size: clamp(2.6rem, 5.5vw, 5.8rem); letter-spacing: -0.015em;">
+              Escolha a sua <em class="italic font-normal">favorita</em>
+            </h2>
+          </div>
+          <div class="flex flex-col md:items-end gap-2">
+            <span class="text-xs tracking-[0.2em] text-pizza-text/50 uppercase">( passe o cursor sobre a estação )</span>
+            <p id="cardapio-desc" class="text-sm text-pizza-text/70 max-w-sm md:text-right">
+              Três clássicos da nossa cozinha selecionados pela curadoria do chef pizzaiolo.
+            </p>
+          </div>
+        </div>
+
+        <!-- GRID DE STATION CARDS (Inspirado no .galCard do Koisei) -->
+        <div id="cards-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-14 lg:gap-10 pt-6">
+
+          <!-- Station Card 01: Frango & Catupiry -->
+          <article id="card-frango" class="gal-card anim-fade-up group relative flex flex-col" data-station="01">
+            <!-- Outline Numeral 01 -->
+            <span class="gal-num absolute -top-11 -left-2 md:-left-4 z-20 tracking-tight select-none pointer-events-none" style="font-size: clamp(4.5rem, 7vw, 7.2rem); line-height: 1;">01</span>
+
+            <!-- Plate Frame Image -->
+            <div class="relative h-72 sm:h-80 overflow-hidden rounded bg-pizza-dark">
+              <div class="absolute -inset-[10px] border border-pizza-text/20 pointer-events-none z-10 rounded"></div>
+              <img src="img/pizza_frango.jpg" alt="Pizza de Frango com Catupiry" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" style="transform: scale(1.12);" />
+              <span class="absolute top-3.5 right-3.5 z-10 bg-pizza-dark/85 text-pizza-light text-[10px] uppercase tracking-[0.24em] px-3.5 py-1.5 rounded-full backdrop-blur-md border border-pizza-light/15">
+                Mais Pedida
+              </span>
+            </div>
+
+            <!-- Conteúdo Editorial do Card -->
+            <div class="pt-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-baseline justify-between gap-3 border-b border-pizza-text/15 pb-3">
+                  <h3 class="font-titulo font-medium text-pizza-text tracking-tight" style="font-size: clamp(1.75rem, 2.4vw, 2.35rem); line-height: 1.1;">
+                    Frango &amp; <em class="italic font-normal">Catupiry</em>
+                  </h3>
+                  <span class="font-titulo text-2xl font-semibold text-pizza-primary whitespace-nowrap tabular-nums">R$ 49,90</span>
+                </div>
+                <p class="mt-3.5 text-sm text-pizza-text/70 leading-relaxed">
+                  Peito de frango caipira desfiado e assado em ervas, coberto pelo legítimo Catupiry gratinado na lenha, azeitonas pretas e orégano fresco.
+                </p>
+              </div>
+
+              <div class="mt-6">
+                <div class="flex gap-2 flex-wrap mb-5">
+                  <span class="text-[11px] uppercase tracking-[0.16em] text-pizza-text/75 px-3 py-1 rounded-full border border-pizza-text/25 bg-pizza-cream/60">Frango Caipira</span>
+                  <span class="text-[11px] uppercase tracking-[0.16em] text-pizza-text/75 px-3 py-1 rounded-full border border-pizza-text/25 bg-pizza-cream/60">Catupiry Original</span>
+                </div>
+                <div class="flex items-center justify-between pt-2">
+                  <button type="button" data-pizza="Frango & Catupiry (R$ 49,90)" class="btn-pedir u-link inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-pizza-text font-medium bg-transparent border-0 p-0 cursor-pointer">
+                    Pedir Esta Estação
+                    <iconify-icon icon="solar:arrow-right-linear" width="15" stroke-width="1.5"></iconify-icon>
+                  </button>
+                  <span class="text-[11px] tracking-[0.2em] text-pizza-text/45 tabular-nums">350G · 8 FATIAS</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Station Card 02: Pepperoni Clássico (Ativo por padrão como no showcase Koisei) -->
+          <article id="card-pepperoni" class="gal-card is-active anim-fade-up group relative flex flex-col" data-station="02">
+            <!-- Outline Numeral 02 -->
+            <span class="gal-num absolute -top-11 -left-2 md:-left-4 z-20 tracking-tight select-none pointer-events-none" style="font-size: clamp(4.5rem, 7vw, 7.2rem); line-height: 1;">02</span>
+
+            <!-- Plate Frame Image -->
+            <div class="relative h-72 sm:h-80 overflow-hidden rounded bg-pizza-dark ring-1 ring-pizza-primary/40">
+              <div class="absolute -inset-[10px] border border-pizza-primary/35 pointer-events-none z-10 rounded"></div>
+              <img src="img/pizza_pepperoni.jpg" alt="Pizza de Pepperoni" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" style="transform: scale(1.12);" />
+              <span class="absolute top-3.5 right-3.5 z-10 bg-pizza-primary text-pizza-cream text-[10px] uppercase tracking-[0.24em] px-3.5 py-1.5 rounded-full shadow">
+                Assinatura · Hot
+              </span>
+            </div>
+
+            <!-- Conteúdo Editorial do Card -->
+            <div class="pt-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-baseline justify-between gap-3 border-b border-pizza-text/15 pb-3">
+                  <h3 class="font-titulo font-medium text-pizza-text tracking-tight" style="font-size: clamp(1.75rem, 2.4vw, 2.35rem); line-height: 1.1;">
+                    Pepperoni <em class="italic font-normal">Clássico</em>
+                  </h3>
+                  <span class="font-titulo text-2xl font-semibold text-pizza-primary whitespace-nowrap tabular-nums">R$ 54,90</span>
+                </div>
+                <p class="mt-3.5 text-sm text-pizza-text/70 leading-relaxed">
+                  Fatias de pepperoni artesanal curado com páprica defumada sobre molho de tomates San Marzano e fior di latte derretido.
+                </p>
+              </div>
+
+              <div class="mt-6">
+                <div class="flex gap-2 flex-wrap mb-5">
+                  <span class="text-[11px] uppercase tracking-[0.16em] text-pizza-primary px-3 py-1 rounded-full border border-pizza-primary/35 bg-pizza-primary/5">Cura Artesanal</span>
+                  <span class="text-[11px] uppercase tracking-[0.16em] text-pizza-text/75 px-3 py-1 rounded-full border border-pizza-text/25 bg-pizza-cream/60">Fior di Latte</span>
+                </div>
+                <div class="flex items-center justify-between pt-2">
+                  <button type="button" data-pizza="Pepperoni Clássico (R$ 54,90)" class="btn-pedir u-link inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-pizza-primary font-medium bg-transparent border-0 p-0 cursor-pointer">
+                    Pedir Esta Estação
+                    <iconify-icon icon="solar:arrow-right-linear" width="15" stroke-width="1.5"></iconify-icon>
+                  </button>
+                  <span class="text-[11px] tracking-[0.2em] text-pizza-text/45 tabular-nums">380G · 8 FATIAS</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Station Card 03: Quatro Queijos -->
+          <article id="card-queijos" class="gal-card anim-fade-up group relative flex flex-col" data-station="03">
+            <!-- Outline Numeral 03 -->
+            <span class="gal-num absolute -top-11 -left-2 md:-left-4 z-20 tracking-tight select-none pointer-events-none" style="font-size: clamp(4.5rem, 7vw, 7.2rem); line-height: 1;">03</span>
+
+            <!-- Plate Frame Image -->
+            <div class="relative h-72 sm:h-80 overflow-hidden rounded bg-pizza-dark">
+              <div class="absolute -inset-[10px] border border-pizza-text/20 pointer-events-none z-10 rounded"></div>
+              <img src="img/pizza_quatro_queijos.jpg" alt="Pizza Quatro Queijos" class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" style="transform: scale(1.12);" />
+              <span class="absolute top-3.5 right-3.5 z-10 bg-pizza-secondary text-pizza-deep text-[10px] font-semibold uppercase tracking-[0.24em] px-3.5 py-1.5 rounded-full">
+                Reserva Ouro
+              </span>
+            </div>
+
+            <!-- Conteúdo Editorial do Card -->
+            <div class="pt-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-baseline justify-between gap-3 border-b border-pizza-text/15 pb-3">
+                  <h3 class="font-titulo font-medium text-pizza-text tracking-tight" style="font-size: clamp(1.75rem, 2.4vw, 2.35rem); line-height: 1.1;">
+                    Quatro <em class="italic font-normal">Queijos</em>
+                  </h3>
+                  <span class="font-titulo text-2xl font-semibold text-pizza-primary whitespace-nowrap tabular-nums">R$ 59,90</span>
+                </div>
+                <p class="mt-3.5 text-sm text-pizza-text/70 leading-relaxed">
+                  Harmonia entre fior di latte, gorgonzola dolce italiano, parmesão maturado 24 meses e provolone defumado sobre base branca.
+                </p>
+              </div>
+
+              <div class="mt-6">
+                <div class="flex gap-2 flex-wrap mb-5">
+                  <span class="text-[11px] uppercase tracking-[0.16em] text-pizza-text/75 px-3 py-1 rounded-full border border-pizza-text/25 bg-pizza-cream/60">4 Queijos Nobres</span>
+                  <span class="text-[11px] uppercase tracking-[0.16em] text-pizza-text/75 px-3 py-1 rounded-full border border-pizza-text/25 bg-pizza-cream/60">Maturação 24m</span>
+                </div>
+                <div class="flex items-center justify-between pt-2">
+                  <button type="button" data-pizza="Quatro Queijos (R$ 59,90)" class="btn-pedir u-link inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-pizza-text font-medium bg-transparent border-0 p-0 cursor-pointer">
+                    Pedir Esta Estação
+                    <iconify-icon icon="solar:arrow-right-linear" width="15" stroke-width="1.5"></iconify-icon>
+                  </button>
+                  <span class="text-[11px] tracking-[0.2em] text-pizza-text/45 tabular-nums">400G · 8 FATIAS</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Barra de Progresso da Galeria (#galBar & #galCount do Koisei) -->
+        <div class="flex items-center gap-6 pt-16 mt-8">
+          <div class="relative flex-1 h-px bg-pizza-text/15">
+            <div id="galBar" class="absolute inset-0 origin-left bg-pizza-text transition-transform duration-500" style="transform: scaleX(0.66);"></div>
+          </div>
+          <span id="galCount" class="text-xs tabular-nums tracking-[0.2em] text-pizza-text/80">02 — 03</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 04 · DEPOIMENTOS / CRÔNICAS NOTURNAS (KOISEI NIGHT CHAPTERS) ==================== -->
+    <section id="depoimentos" data-section="04" class="relative z-20 py-28 md:py-36 bg-pizza-dark text-pizza-light overflow-hidden">
+      <!-- Imagem de fundo sutil + vinheta de filme noturno -->
+      <div class="absolute inset-0 bg-cover bg-center opacity-15 mix-blend-luminosity pointer-events-none" style="background-image: url('img/pizza_hero.jpg');"></div>
+      <div class="pointer-events-none absolute inset-0 film-vignette"></div>
+
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+        <!-- Cabeçalho Night Chapter -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <p class="text-xs uppercase mb-4 flex items-center gap-3 tracking-[0.32em] text-pizza-light/80">
+              <span class="inline-block w-1.5 h-1.5 bg-pizza-primary"></span>
+              — 03 · Crônicas Noturnas
+            </p>
+            <h2 class="font-titulo font-medium tracking-tight text-pizza-light leading-none" style="font-size: clamp(2.6rem, 5.2vw, 5.4rem); letter-spacing: -0.015em; text-shadow: 0 2px 30px rgba(26,19,14,0.6);">
+              Vozes ao redor <em class="italic font-normal text-pizza-secondary">do forno</em>
+            </h2>
+          </div>
+
+          <!-- Numerais Romanos Interativos (.romNum do Koisei) -->
+          <div class="flex items-center gap-5 font-titulo text-lg select-none" aria-label="Capítulos de avaliações">
+            <button type="button" data-rom="0" class="rom-btn text-pizza-primary transition-colors cursor-pointer bg-transparent border-0 p-1">Ⅰ</button>
+            <button type="button" data-rom="1" class="rom-btn text-pizza-light/45 hover:text-pizza-light transition-colors cursor-pointer bg-transparent border-0 p-1">Ⅱ</button>
+            <button type="button" data-rom="2" class="rom-btn text-pizza-light/45 hover:text-pizza-light transition-colors cursor-pointer bg-transparent border-0 p-1">Ⅲ</button>
+          </div>
+        </div>
+
+        <!-- Grid de Capítulos / Avaliações -->
+        <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Capítulo I -->
+          <div id="review-1" data-chapter="0" class="review-card anim-fade-up group relative bg-pizza-deep/70 border border-pizza-light/15 rounded p-8 md:p-10 backdrop-blur-sm hover:border-pizza-primary/60 transition-all duration-500 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-titulo text-2xl text-pizza-primary">Ⅰ</span>
+                <span class="text-xs tracking-[0.24em] uppercase text-pizza-secondary">★★★★★ · 5.0</span>
+              </div>
+              <p class="font-titulo italic text-xl md:text-2xl text-pizza-light/95 leading-snug mb-6">
+                "A melhor pizza que já provei! A massa de 48h tem uma crocância delicada e uma leveza que lembra as autênticas pizzarias de Nápoles."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-pizza-light/10 flex items-center justify-between text-xs tracking-[0.16em] uppercase">
+              <strong class="text-pizza-secondary font-medium">— Ana Souza</strong>
+              <span class="text-pizza-light/45">Cliente desde 2020</span>
+            </div>
+          </div>
+
+          <!-- Capítulo II -->
+          <div id="review-2" data-chapter="1" class="review-card anim-fade-up group relative bg-pizza-deep/70 border border-pizza-light/15 rounded p-8 md:p-10 backdrop-blur-sm hover:border-pizza-primary/60 transition-all duration-500 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-titulo text-2xl text-pizza-light/50 group-hover:text-pizza-primary transition-colors">Ⅱ</span>
+                <span class="text-xs tracking-[0.24em] uppercase text-pizza-secondary">★★★★★ · 5.0</span>
+              </div>
+              <p class="font-titulo italic text-xl md:text-2xl text-pizza-light/95 leading-snug mb-6">
+                "O Pepperoni Clássico é uma obra de arte. Chegou fumegante, com borda levemente tostada pela lenha e um aroma inesquecível."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-pizza-light/10 flex items-center justify-between text-xs tracking-[0.16em] uppercase">
+              <strong class="text-pizza-secondary font-medium">— Carlos Lima</strong>
+              <span class="text-pizza-light/45">Cliente desde 2021</span>
+            </div>
+          </div>
+
+          <!-- Capítulo III -->
+          <div id="review-3" data-chapter="2" class="review-card anim-fade-up group relative bg-pizza-deep/70 border border-pizza-light/15 rounded p-8 md:p-10 backdrop-blur-sm hover:border-pizza-primary/60 transition-all duration-500 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <span class="font-titulo text-2xl text-pizza-light/50 group-hover:text-pizza-primary transition-colors">Ⅲ</span>
+                <span class="text-xs tracking-[0.24em] uppercase text-pizza-secondary">★★★★★ · 5.0</span>
+              </div>
+              <p class="font-titulo italic text-xl md:text-2xl text-pizza-light/95 leading-snug mb-6">
+                "A Quatro Queijos tem um equilíbrio raro. O gorgonzola dolce conversa com o parmesão maturado sem pesar. Já virou ritual de sexta-feira."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-pizza-light/10 flex items-center justify-between text-xs tracking-[0.16em] uppercase">
+              <strong class="text-pizza-secondary font-medium">— Fernanda Costa</strong>
+              <span class="text-pizza-light/45">Cliente desde 2019</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Citação Editorial & Barra de Tempo do Filme -->
+        <div class="mt-20 pt-12 border-t border-pizza-light/10 flex flex-col items-center text-center">
+          <p class="font-titulo italic text-pizza-light tracking-tight" style="font-size: clamp(1.5rem, 2.8vw, 2.4rem);">
+            "Onde o calor vivo da lenha encontra a serenidade da mesa."
+          </p>
+          <p class="mt-3 text-xs uppercase tracking-[0.32em] text-pizza-secondary">— Filosofia PizzaArte</p>
+        </div>
+
+        <div class="mt-12 flex items-center gap-4">
+          <div class="relative flex-1 h-px bg-pizza-light/20">
+            <div id="filmBar" class="absolute inset-0 origin-left bg-pizza-light transition-transform duration-500" style="transform: scaleX(0.33);"></div>
+          </div>
+          <span id="filmTime" class="text-xs tabular-nums tracking-[0.1em] text-pizza-light/75">CAP. 01 / 03</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 05 · CONTATO / VISITAR (KOISEI VISIT & MAGNET DISC) ==================== -->
+    <section id="contato" data-section="05" class="relative z-20 py-28 md:py-36 bg-pizza-cream overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 paper-vignette"></div>
+
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative">
+        <!-- Cabeçalho + Begin Disc Magnético (#magnet do Koisei) -->
+        <p class="text-xs uppercase mb-8 flex items-center gap-3 tracking-[0.32em] text-pizza-text">
+          <span class="inline-block w-1.5 h-1.5 bg-pizza-primary"></span>
+          — 04 · Visite ou Faça seu Pedido
+        </p>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-10 md:gap-16 pb-16 border-b border-pizza-text/15">
+          <h2 class="font-titulo font-medium tracking-tight text-pizza-text" style="font-size: clamp(2.6rem, 5.5vw, 5.8rem); line-height: 1.02; letter-spacing: -0.015em;">
+            Pronto para a sua<br />próxima <em class="italic font-normal text-pizza-primary">experiência?</em>
+          </h2>
+
+          <!-- Begin Disc Magnético 120x120 -->
+          <a id="magnet" href="#input-nome" class="shrink-0 w-[124px] h-[124px] rounded-full flex flex-col items-center justify-center gap-1.5 bg-pizza-primary text-pizza-cream no-underline shadow-xl transition-transform duration-200 will-change-transform">
+            <span class="text-xs uppercase tracking-[0.14em] font-medium">Pedir</span>
+            <iconify-icon icon="solar:arrow-right-linear" width="20" stroke-width="1.5"></iconify-icon>
+          </a>
+        </div>
+
+        <!-- Conteúdo Contato: Detalhes Editoriais + Formulário Minimalista Washi -->
+        <div id="contato-content" class="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-16 pt-16 items-start">
+          <!-- Coluna Informações (5 cols) -->
+          <div id="contato-info" class="lg:col-span-5 flex flex-col gap-8">
+            <div>
+              <h3 class="font-titulo text-3xl font-medium text-pizza-text mb-3">Nossa Casa &amp; Horários</h3>
+              <p class="text-sm text-pizza-text/75 leading-relaxed">
+                Atendemos todos os dias das 17h às 23h. Venha sentir o aroma da lenha em nosso salão ou receba nossa caixa térmica artesanal em casa.
+              </p>
+            </div>
+
+            <div id="contato-detalhes" class="flex flex-col divide-y divide-pizza-text/15 border-y border-pizza-text/15">
+              <div class="py-4 flex items-center justify-between gap-4">
+                <span class="text-xs uppercase tracking-[0.24em] text-pizza-text/55">Endereço</span>
+                <span class="text-sm font-medium text-pizza-text text-right">Rua das Pizzas, 42 – Centro</span>
+              </div>
+              <div class="py-4 flex items-center justify-between gap-4">
+                <span class="text-xs uppercase tracking-[0.24em] text-pizza-text/55">Reservas &amp; Delivery</span>
+                <span class="text-sm font-medium text-pizza-text tabular-nums text-right">(11) 99999-0000</span>
+              </div>
+              <div class="py-4 flex items-center justify-between gap-4">
+                <span class="text-xs uppercase tracking-[0.24em] text-pizza-text/55">E-mail</span>
+                <span class="text-sm font-medium text-pizza-text text-right">contato@pizzaarte.com.br</span>
+              </div>
+              <div class="py-4 flex items-center justify-between gap-4">
+                <span class="text-xs uppercase tracking-[0.24em] text-pizza-text/55">Forno Acesa</span>
+                <span class="text-sm font-medium text-pizza-primary text-right">Seg–Dom · 17h às 23h</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Formulário (7 cols) -->
+          <div id="contato-form-wrapper" class="lg:col-span-7">
+            <form id="contato-form" class="bg-pizza-warm/70 border border-pizza-text/15 rounded p-8 md:p-12 flex flex-col gap-6 relative" onsubmit="return false;">
+              <div class="flex items-center justify-between border-b border-pizza-text/15 pb-4">
+                <h3 class="font-titulo text-2xl md:text-3xl font-medium text-pizza-text">Envie seu pedido ou mensagem</h3>
+                <span class="text-xs uppercase tracking-[0.24em] text-pizza-primary">Resposta Rápida</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                  <label for="input-nome" class="text-xs uppercase tracking-[0.24em] text-pizza-text/70">Seu Nome</label>
+                  <input type="text" id="input-nome" required class="w-full px-4 py-3.5 border border-pizza-text/25 rounded bg-pizza-cream/80 font-corpo text-sm text-pizza-text outline-none focus:border-pizza-primary transition-colors" placeholder="Ex: João Silva" />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label for="input-email" class="text-xs uppercase tracking-[0.24em] text-pizza-text/70">E-mail ou WhatsApp</label>
+                  <input type="text" id="input-email" required class="w-full px-4 py-3.5 border border-pizza-text/25 rounded bg-pizza-cream/80 font-corpo text-sm text-pizza-text outline-none focus:border-pizza-primary transition-colors" placeholder="(11) 99999-0000" />
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <label for="input-msg" class="text-xs uppercase tracking-[0.24em] text-pizza-text/70">Estação Escolhida / Mensagem</label>
+                <textarea id="input-msg" rows="4" class="w-full px-4 py-3.5 border border-pizza-text/25 rounded bg-pizza-cream/80 font-corpo text-sm text-pizza-text outline-none focus:border-pizza-primary transition-colors resize-y" placeholder="Conte-nos qual pizza deseja pedir ou solicite uma reserva de mesa..."></textarea>
+              </div>
+
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                <span id="form-feedback" class="text-xs tracking-[0.12em] text-pizza-primary hidden">✓ Mensagem recebida! Nosso pizzaiolo já foi avisado.</span>
+                <button type="submit" id="btn-enviar" class="inline-flex items-center justify-center gap-3 bg-pizza-text text-pizza-cream font-corpo text-xs uppercase tracking-[0.18em] font-medium px-8 py-4 rounded-full border-none cursor-pointer hover:bg-pizza-primary transition-colors duration-300 ml-auto">
+                  Enviar Mensagem
+                  <iconify-icon icon="solar:arrow-right-linear" width="16" stroke-width="1.5"></iconify-icon>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <!-- ==================== FOOTER ==================== -->
-  <!-- Classes: bg-pizza-dark, pt-12, pb-6 -->
-  <footer id="footer" class="bg-pizza-dark pt-12 pb-6">
-    <div class="w-full max-w-7xl mx-auto px-6">
-      <!-- Classes: flex, flex-col, md:flex-row, items-center, justify-between, flex-wrap, gap-8, pb-8, border-b, border-white/10, mb-6 -->
-      <div id="footer-content" class="flex flex-col md:flex-row items-center justify-between flex-wrap gap-8 pb-8 border-b border-white/10 mb-6">
-        <!-- Classes: flex, flex-col, gap-1.5 -->
-        <div id="footer-brand" class="flex flex-col gap-1.5">
-          <div class="flex items-center gap-2.5">
-            <span class="text-3xl leading-none">&#127829;</span>
-            <span class="font-titulo text-2xl font-black text-white tracking-tight">PizzaArte</span>
-          </div>
-          <!-- Classes: text-sm, text-white/40, mt-1 -->
-          <p class="text-sm text-white/40 mt-1">Feita com amor, entregue com cuidado.</p>
+  <footer id="footer" class="relative z-20 bg-pizza-cream border-t border-pizza-text/15 pt-16 overflow-hidden">
+    <div class="pointer-events-none absolute inset-0 paper-vignette"></div>
+
+    <div class="max-w-[1400px] mx-auto px-6 md:px-12 relative">
+      <!-- 4 Colunas Editoriais -->
+      <div id="footer-content" class="grid grid-cols-2 md:grid-cols-4 gap-10 pb-14">
+        <div id="footer-brand" class="flex flex-col gap-3 text-xs tracking-[0.12em]">
+          <span class="uppercase mb-2 tracking-[0.32em] text-pizza-text/50">Explorar</span>
+          <a href="#hero" class="u-link w-fit text-pizza-text no-underline">Início</a>
+          <a href="#sobre" class="u-link w-fit text-pizza-text no-underline">Manifesto</a>
+          <a href="#cardapio" class="u-link w-fit text-pizza-text no-underline">Estações</a>
+          <a href="#depoimentos" class="u-link w-fit text-pizza-text no-underline">Crônicas</a>
         </div>
-        <!-- Classes: flex, gap-2, flex-wrap -->
-        <div id="footer-links" class="flex gap-2 flex-wrap">
-          <!-- Classes: text-white/60, text-sm, px-3.5, py-1.5, rounded-lg, hover:text-white, hover:bg-white/10, transition-all, duration-300, no-underline -->
-          <a href="#hero" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Início</a>
-          <a href="#cardapio" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Cardápio</a>
-          <a href="#sobre" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Sobre</a>
-          <a href="#contato" class="text-white/60 text-sm px-3.5 py-1.5 rounded-lg hover:text-white hover:bg-white/10 transition-all duration-300 no-underline">Contato</a>
+
+        <div id="footer-links" class="flex flex-col gap-3 text-xs tracking-[0.12em]">
+          <span class="uppercase mb-2 tracking-[0.32em] text-pizza-text/50">Social</span>
+          <a href="#contato" id="btn-instagram" class="u-link w-fit text-pizza-text no-underline">Instagram</a>
+          <a href="#contato" id="btn-whatsapp" class="u-link w-fit text-pizza-text no-underline">WhatsApp</a>
+          <a href="#cardapio" class="u-link w-fit text-pizza-text no-underline">iFood Premium</a>
         </div>
-        <!-- Classes: flex, gap-3 -->
-        <div id="footer-social" class="flex gap-3">
-          <!-- Classes: inline-flex, items-center, gap-1.5, text-white/70, text-sm, font-medium, px-4, py-2, border, border-white/15, rounded-full, hover:text-white, hover:border-pizza-primary, hover:bg-pizza-primary/15 -->
-          <a href="#" class="inline-flex items-center gap-1.5 text-white/70 text-sm font-medium px-4 py-2 border border-white/15 rounded-full hover:text-white hover:border-pizza-primary hover:bg-pizza-primary/15 transition-all duration-300 no-underline" id="btn-instagram" aria-label="Instagram">&#128248; Instagram</a>
-          <a href="#" class="inline-flex items-center gap-1.5 text-white/70 text-sm font-medium px-4 py-2 border border-white/15 rounded-full hover:text-white hover:border-pizza-primary hover:bg-pizza-primary/15 transition-all duration-300 no-underline" id="btn-whatsapp" aria-label="WhatsApp">&#128172; WhatsApp</a>
+
+        <div id="footer-social" class="flex flex-col gap-3 text-xs tracking-[0.12em]">
+          <span class="uppercase mb-2 tracking-[0.32em] text-pizza-text/50">Casa</span>
+          <a href="#contato" class="u-link w-fit text-pizza-text no-underline">Reservas</a>
+          <a href="#contato" class="u-link w-fit text-pizza-text no-underline">Imprensa</a>
+          <span class="text-pizza-text/55 mt-1">Feita com amor &amp; fogo.</span>
+        </div>
+
+        <div class="flex flex-col gap-3 text-xs tracking-[0.12em]">
+          <span class="uppercase mb-2 tracking-[0.32em] text-pizza-text/50">Forno &amp; Salão</span>
+          <span class="text-pizza-text/80">Rua das Pizzas, 42 – Centro</span>
+          <span class="text-pizza-text/80 tabular-nums">Seg–Dom · 17h às 23h</span>
         </div>
       </div>
-      <!-- Classes: text-center, text-xs, text-white/30 -->
-      <p id="footer-copy" class="text-center text-xs text-white/30">&#169; 2026 PizzaArte. Todos os direitos reservados.</p>
+    </div>
+
+    <!-- Giant Wordmark Rise -->
+    <div class="overflow-hidden px-2 text-center select-none">
+      <div id="wordmark" class="font-titulo font-medium tracking-tight leading-none whitespace-nowrap text-pizza-text will-change-transform" style="letter-spacing: -0.015em; transform: translateY(110%);">
+        PIZZAARTE
+      </div>
+    </div>
+
+    <!-- Barra Inferior Minimalista -->
+    <div class="border-t border-pizza-text/12">
+      <div class="max-w-[1400px] mx-auto px-6 md:px-12 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs tracking-[0.15em] text-pizza-text/55">
+        <p id="footer-copy" class="m-0">&#169; 2026 PizzaArte — fermentação lenta &amp; forno a lenha</p>
+        <span>Nápoles → São Paulo</span>
+      </div>
     </div>
   </footer>
 
-  <script>
-    // Smooth scroll para links de âncora
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Animação de entrada com IntersectionObserver
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.anim-fade-up').forEach(function(el) {
-      observer.observe(el);
-    });
-
-    // Header escurece ao scrollar
-    window.addEventListener('scroll', function() {
-      var header = document.getElementById('header');
-      if (window.scrollY > 50) {
-        header.classList.add('bg-pizza-dark/95', 'backdrop-blur-lg', 'shadow-2xl');
-      } else {
-        header.classList.remove('bg-pizza-dark/95', 'backdrop-blur-lg', 'shadow-2xl');
-      }
-    });
-  </script>
+  <!-- ==================== SCRIPTS & MOTION ENGINE (GSAP + SCROLLTRIGGER + LENIS) ==================== -->
+  <script src="js/main.js"></script>
 
 </body>
 </html>
