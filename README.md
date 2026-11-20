@@ -80,22 +80,24 @@ Foram utilizadas **mais de 50 classes utilitárias distintas** do Tailwind CSS, 
 ```
 projeto_tailwind_CSS/
 │
-├── index.html          # Estrutura HTML principal com classes utilitárias Tailwind CSS
-├── vercel.json         # Configuração de deploy estático e cache de assets na Vercel
-├── .gitignore          # Ignora arquivos locais e a pasta de referência do design system
-├── README.md           # Documentação do projeto
+├── .gitignore              # Ignora arquivos locais e a pasta de referência do design system
+├── README.md               # Documentação do projeto
 │
-├── css/
-│   └── main.css        # Tokens de superfície, estados de navegação e keyframes de motion
-│
-├── js/
-│   └── main.js         # Motor de motion (GSAP, ScrollTrigger, Lenis) e interações de UI
-│
-└── img/
-    ├── pizza_hero.jpg           # Imagem de fundo do Hero e seção Manifesto
-    ├── pizza_frango.jpg         # Card: Estação 01 - Frango & Catupiry
-    ├── pizza_pepperoni.jpg      # Card: Estação 02 - Pepperoni Clássico
-    └── pizza_quatro_queijos.jpg # Card: Estação 03 - Quatro Queijos
+└── front/                  # Root Directory para deploy na Vercel
+    ├── index.html          # Estrutura HTML principal com classes utilitárias Tailwind CSS
+    ├── vercel.json         # Configuração de deploy estático e cache de assets na Vercel
+    │
+    ├── css/
+    │   └── main.css        # Tokens de superfície, estados de navegação e keyframes de motion
+    │
+    ├── js/
+    │   └── main.js         # Motor de motion (GSAP, ScrollTrigger, Lenis) e interações de UI
+    │
+    └── img/
+        ├── pizza_hero.jpg           # Imagem de fundo do Hero e seção Manifesto
+        ├── pizza_frango.jpg         # Card: Estação 01 - Frango & Catupiry
+        ├── pizza_pepperoni.jpg      # Card: Estação 02 - Pepperoni Clássico
+        └── pizza_quatro_queijos.jpg # Card: Estação 03 - Quatro Queijos
 ```
 
 ---
